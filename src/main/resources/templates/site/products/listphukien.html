@@ -147,13 +147,13 @@
               <li class="item col-lg-4 col-md-3 col-sm-4 col-xs-6" ng-repeat="lk in lks" >  <!--th:each="lk : ${Alllk}"-->
                <div class="item-inner">
                 <div class="item-img">
-                  <div class="item-img-info"><a th:href="@{/home/phukien-detail?idlk={{lk.malk}}}" title="Retis lapen casen" class="product-image"><img src="/products-images/p31.jpg" alt="Retis lapen casen"></a>
+                  <div class="item-img-info"><a th:href="@{/home/phukien-detail?idlk={{lk.malk}}}" title="Retis lapen casen" class="product-image"><img src="lk.imagesaccessoriesByMalk.hinh" alt="Retis lapen casen"></a>
                     <div class="new-label new-top-left">Đã sử dụng</div>
                     <div class="sale-label sale-top-left">-15%</div>
                     <div class="item-box-hover">
                       <div class="box-inner">
                         <div class="add_cart" sec:authorize="isAuthenticated()">
-                          <button ng-click="addcart(lk.malk)" class="button btn-cart" type="button"></button>
+                          <button ng-click="addcart(lk.im)" class="button btn-cart" type="button"></button>
                         </div>
                         <div class="product-detail-bnt"><a th:href="@{/home/phukien-detail?idlk={{lk.malk}}}" class="button detail-bnt"><span>Xem nhanh</span></a></div>
                         <div class="actions" sec:authorize="isAuthenticated()"><span class="add-to-links"><a href="#" class="link-wishlist" title="Add to Wishlist"><span>Add to Wishlist</span></a> </span> </div>
@@ -174,7 +174,7 @@
                         </div>
                       </div>
                       <div class="item-price">
-                        <div class="price-box"><span class="regular-price"><span class="price">$49000.00</span> </span> </div>
+                        <div class="price-box"><span class="regular-price"><span class="price">${{lk.gia}}</span> </span> </div>
                       </div>
                       <div class="other-info">
                         <div class="col-km"><i class="fa fa-tachometer"></i> 4875km</div>

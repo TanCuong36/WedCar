@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheet/jquery.bxslider.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheet/jquery.mobile-menu.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheet/style.css}" media="all">
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/stylesheet/customer.css}" media="all">-->
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheet/responsive.css}" media="all">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700,800'
           rel='stylesheet' type='text/css'>
@@ -53,23 +54,7 @@
 
 <body ng-app="myApp">
 
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('myctrl', function ($scope, $http) {
-        $http.get('/CarsSale').then(function (response) {
-            $scope.CarsSale = response.data;
-        })
-        $http.get('/Brands').then(function (response) {
-            $scope.Brands = response.data;
-        })
-        $scope.fillHang = function(hang){
-            $http.get('/Cars?hang='+hang).then(function (response) {
-                $scope.Cars = response.data;
-            })
-        }
-    });
 
-</script>
 
 <nav th:replace="site/layouts/nav::nav">
 

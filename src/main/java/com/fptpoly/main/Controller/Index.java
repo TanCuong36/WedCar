@@ -20,8 +20,11 @@ public class Index {
 
     @Autowired
     AccountRepository accountRepository;
+
     @Autowired
-    CarRepository car;
+    ImagesaccessoriesRepository imagesaccessoriesRepository;
+    @Autowired
+    CarRepository carRepository;
     @Autowired
     AccessoriesRepository accessoriesRepository;
     @Autowired
@@ -32,14 +35,15 @@ public class Index {
     CartaccessoriesRepository cartaccessoriesRepository;
 
     // hiển thị tất cả xe
-    @GetMapping("Cars")
-    public List Allcar(@RequestParam("hang")Optional<String>hang){
-        String Hang = hang.orElse(controller.hangxe);
-        System.out.println("Hang: "+Hang);
-        if (Hang==""){
-            return car.findAll();
-        }
-            return car.findAllByHang(Hang);
+    @GetMapping("CarsAll")
+    public int Allcar(){
+        /*System.out.println("Số lượng mãng:"+carRepository.findAll().size());*/
+        return carRepository.findAll().size();
+    }
+
+    @GetMapping("test")
+    public List linkkien(){
+        return imagesaccessoriesRepository.findAll();
     }
 
     // hiện thị danh sách giỏ hàng theo từng thành viên
@@ -76,7 +80,7 @@ public class Index {
     public void addlk(@RequestParam("idlk")String id,Principal principal){
         System.out.println("Mã Sinh Kiện: "+id);
         boolean check= false;
-        List<Cartaccessories> carts = cartaccessoriesRepository.findAllByMatv(principal.getName());  // kiểm tra sảm phẩm đã thêm chưa
+        List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccountByMatv(principal.getName());  // kiểm tra sảm phẩm đã thêm chưa
         for(int i =0;i<carts.size();++i){
             Cartaccessories cart = carts.get(i);
             if (cart.getAccessoriesByMalk().getMalk().equals(id)){      // sản phẩm đã có trong giỏ thì tăng 1
@@ -105,7 +109,7 @@ public class Index {
     // danh sách xe giảm giá
     @GetMapping("CarsSale")
     public List carsale(){
-        return car.findAll();
+        return carRepository.findAll();
     }
 
     // danh sách các hãng xe
@@ -121,10 +125,10 @@ public class Index {
     // lọc sản phẩm theo loại xe
     @GetMapping("Cars/Loai")
     public List filltype(@RequestParam("type")String type){
-        return car.findAllByLoaixe(type);
+        return carRepository.findAllByTypecarByLoaixe(type);
     }
 
     @GetMapping (value = "Fill")
     public List fill(){
-        return car.findAllByNamsx(Integer.parseInt(controller.fill.getNam()));}
+        return carRepository.findAllByNamsx(Integer.parseInt(controller.fill.getNam()));}
 }

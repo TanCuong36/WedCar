@@ -77,9 +77,9 @@ public class WebMainController {
      public String listcar(Model model,@PathVariable("filler")String fil){
           try{
                if (fil.startsWith("LX")){
-                    model.addAttribute("fillCar",carRepository.findAllByLoaixe(fil));
+                    model.addAttribute("fillCar",carRepository.findAllByTypecarByLoaixe(fil));
                }else{
-                    model.addAttribute("fillCar",carRepository.findAllByHang(fil));
+                    model.addAttribute("fillCar",carRepository.findAllByBrandByMa(fil));
                }
           }catch (Exception e) {
                model.addAttribute("fillCar",carRepository.findAll());
@@ -96,7 +96,7 @@ public class WebMainController {
      @GetMapping("home/addcart")
      public String addcart(@RequestParam("idlk")String id,Principal principal){
           boolean check= false;
-          List<Cartaccessories> carts = cartaccessoriesRepository.findAllByMatv(principal.getName());
+          List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccountByMatv(principal.getName());
           for(int i =0;i<carts.size();++i){
                Cartaccessories cart = carts.get(i);
                if (cart.getAccessoriesByMalk().getMalk().equals(id)){

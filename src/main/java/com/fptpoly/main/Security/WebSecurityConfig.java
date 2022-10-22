@@ -29,12 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/home","/home/listcar","/home/login").permitAll();
-
-        http.authorizeRequests()
+        http.authorizeRequests().antMatchers("/home","/home/listcar","/home/login").permitAll()
         .antMatchers("/Admin").hasAuthority("ADMIN").antMatchers("/home/member/shopping-cart","/Add").hasAuthority("USER")
         .and().exceptionHandling().accessDeniedPage("/403")
-        .and().formLogin().permitAll().loginPage("/home/login").defaultSuccessUrl("/home").loginProcessingUrl("/data")
+        .and().formLogin().loginPage("/home/login").defaultSuccessUrl("/home").permitAll().loginProcessingUrl("/data")
         .usernameParameter("username").passwordParameter("password")
         .and().logout().permitAll().logoutUrl("/login").logoutSuccessUrl("/home");
     }

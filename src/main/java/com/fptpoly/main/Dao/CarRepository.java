@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car, String> {
     Car findCarsByIdcar(String id);
-    List<Car> findAllByHang(String hang);
-    List<Car> findAllByLoaixe(String loai);
+    List<Car> findAllByBrandByMa(String hang);
+    List<Car> findAllByTypecarByLoaixe(String loai);
     List<Car> findAllByNamsx(int nam);
 }

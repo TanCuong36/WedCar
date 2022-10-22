@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CartaccessoriesRepository extends JpaRepository<Cartaccessories,Integer> {
-    List<Cartaccessories> findAllByMatv(String matv);
+    List<Cartaccessories> findAllByAccountByMatv(String matv);
     Cartaccessories findAllByStt(int stt);
 }
