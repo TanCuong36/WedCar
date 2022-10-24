@@ -57,11 +57,12 @@ public class WebMainController {
      // danh sách tất cả các xe
      @GetMapping("home/listcar")
      public String listcar(Model model){
-          model.addAttribute("fillCar",carRepository.findAll());
+          System.out.println("số lượng xe: "+carRepository.findAll().size());
+          model.addAttribute("AllCar",carRepository.findAll());
           model.addAttribute("Brands",brandRepository.findAll());
           model.addAttribute("Types",typecarRepository.findAll());
           model.addAttribute("fill",new fillCar());
-          return "site/products/listcar";
+          return "site/products/luoicar";
 
      }
 
@@ -96,7 +97,8 @@ public class WebMainController {
      @GetMapping("home/addcart")
      public String addcart(@RequestParam("idlk")String id,Principal principal){
           boolean check= false;
-          List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccountByMatv(principal.getName());
+          System.out.println(principal.getName());
+          List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccount_Matv(principal.getName());
           for(int i =0;i<carts.size();++i){
                Cartaccessories cart = carts.get(i);
                if (cart.getAccessoriesByMalk().getMalk().equals(id)){
@@ -109,7 +111,7 @@ public class WebMainController {
           if (!check){
                Cartaccessories cart = new Cartaccessories();
                cart.setAccessoriesByMalk(accessoriesRepository.findAllByMalk(id));
-               cart.setAccountByMatv(accountRepository.findAllByMatv(principal.getName()));
+               cart.setAccount(accountRepository.findAllByMatv(principal.getName()));
                cart.setSoluong(1);
                cart.setGia(accessoriesRepository.findAllByMalk(id).getGia());
                cartaccessoriesRepository.save(cart);
@@ -132,6 +134,7 @@ public class WebMainController {
 
      @GetMapping(value = "home/car-detail")
      public String cardetail(Model model, @RequestParam("idcar")String id){
+          carRepository.findCarsByIdcar(id).getImagescarsByIdcar().get(0).getHinh();
           model.addAttribute("Cardetail",carRepository.findCarsByIdcar(id));
           return "site/products/car-detail";
      }

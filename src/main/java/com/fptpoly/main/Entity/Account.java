@@ -4,9 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,8 +63,8 @@ public class Account {
     private List<Billcar> billcarsByManv;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "accountByMatv")
-    private List<Cartaccessories> cartaccessoriesByMatv;
+    @OneToMany(mappedBy = "account")
+    private List<Cartaccessories> cartaccessories = new java.util.ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "accountByMatv")

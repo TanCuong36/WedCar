@@ -1,16 +1,14 @@
 package com.fptpoly.main.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Data
 public class Cartaccessories {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +26,7 @@ public class Cartaccessories {
     private Accessories accessoriesByMalk;
     @ManyToOne
     @JoinColumn(name = "Matv")
-    private Account accountByMatv;
+    private Account account;
 
     
 }

@@ -36,14 +36,9 @@ public class Index {
 
     // hiển thị tất cả xe
     @GetMapping("CarsAll")
-    public int Allcar(){
+    public List Allcar(){
         /*System.out.println("Số lượng mãng:"+carRepository.findAll().size());*/
-        return carRepository.findAll().size();
-    }
-
-    @GetMapping("test")
-    public List linkkien(){
-        return imagesaccessoriesRepository.findAll();
+        return carRepository.findAll();
     }
 
     // hiện thị danh sách giỏ hàng theo từng thành viên
@@ -80,7 +75,7 @@ public class Index {
     public void addlk(@RequestParam("idlk")String id,Principal principal){
         System.out.println("Mã Sinh Kiện: "+id);
         boolean check= false;
-        List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccountByMatv(principal.getName());  // kiểm tra sảm phẩm đã thêm chưa
+        List<Cartaccessories> carts = cartaccessoriesRepository.findAllByAccount_Matv(principal.getName());  // kiểm tra sảm phẩm đã thêm chưa
         for(int i =0;i<carts.size();++i){
             Cartaccessories cart = carts.get(i);
             if (cart.getAccessoriesByMalk().getMalk().equals(id)){      // sản phẩm đã có trong giỏ thì tăng 1
@@ -93,7 +88,7 @@ public class Index {
         if (!check){
             Cartaccessories cart = new Cartaccessories();  // sản phẩm chưa thêm thì thêm sản phẩm vào giỏ hàng
             cart.setAccessoriesByMalk(accessoriesRepository.findAllByMalk(id));
-            cart.setAccountByMatv(accountRepository.findAllByMatv(principal.getName()));
+            cart.setAccount(accountRepository.findAllByMatv(principal.getName()));
             cart.setSoluong(1);
             cart.setGia(accessoriesRepository.findAllByMalk(id).getGia());
             cartaccessoriesRepository.save(cart);

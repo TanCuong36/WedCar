@@ -50,6 +50,9 @@ public class Car {
     @Column(name = "Ghichu")
     private String ghichu;
 
+    @Column(name = "Image")
+    private String image;
+
     @JsonIgnore
     @OneToMany(mappedBy = "carByMacar")
     private List<Accessories> accessoriesByIdcar;
