@@ -17,6 +17,8 @@
             function _success(res) {
                 /*UIkit.modal.dialog('<p class="uk-modal-body">Thêm Sản Phẩm vào giỏ thành công!</p>');*/
                 reload();
+                HideMe1();
+                UIkit.notification({message: 'Đặt Lịch Thành Công', status: 'success'});
             }
             function _error(res) {
                 var data = res.data;
@@ -26,14 +28,12 @@
                 alert("Error: " + status + ":" + data);
             }
             $scope.khunggio=null;
-            console.log($scope.khunggio);
-            $scope.changekhunggio = function (){
+/*            $scope.changekhunggio = function (){
                 console.log($scope.khunggio);
                 console.log($scope.ngay)
-            }
-
+            }*/
+            $scope.min = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate();
             $scope.ngay = new Date();
-            console.log($scope.ngay);
 
             $scope.xacnhan = function (){
                 if (confirm("Bạn có muốn đặt lịch xem xe không!")==true){
@@ -44,25 +44,21 @@
                             'Content-Type': 'application/json'
                         }
                     }).then(_success, _error);
-                    console.log("Ok COn dê")
                 }
             }
             function redate() {
-                document.getElementById('gio1').removeAttribute("disabled");
-                document.getElementById('gio2').removeAttribute("disabled");
-                document.getElementById('gio3').removeAttribute("disabled");
-                document.getElementById('gio4').removeAttribute("disabled");
-                document.getElementById('gio5').removeAttribute("disabled");
-                document.getElementById('gio6').removeAttribute("disabled");
-                document.getElementById('gio7').removeAttribute("disabled");
-                document.getElementById('gio8').removeAttribute("disabled");
+                for(i=1;i<=8;++i){
+                    document.getElementById('gio'+i).checked = false;
+                    document.getElementById('gio'+i).removeAttribute("disabled");
+                }
             }
-            $scope.Valuechage = function () {
+
+
+            $scope.Valuechage = function change() {
                 redate();
                 $http.get("/Appointment?id=CAR0001" + "&ngay=" + $scope.ngay.toDateString()).then(function (response) {
                     $scope.appointment = response.data;
                     angular.forEach($scope.appointment, function (item, key) {
-                        console.log(item)
                         switch (item) {
                             case '08h-09h': {
                                 document.getElementById('gio1').setAttribute('disabled', true);
@@ -109,7 +105,10 @@
 
     </script>
 
-
+    <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p><marquee>Đặt lịch thành công</marquee></p>
+    </div>
     <div id="page">
         <div class="page-heading">
             <div class="breadcrumbs">
@@ -176,7 +175,7 @@
                                         <div class="toll-free"><a href="#" sec:authorize="isAuthenticated()"><i class="fa fa-phone"></i>0705182415</a>
                                         </div>
                                         <div class="ask-question"><a href="#" onClick="ShowMe();" sec:authorize="isAuthenticated()"><i
-                                                class="fa fa-question"></i>Đặt lịch xem xe</a></div>
+                                                class="fa fa-question" ng-click="Valuechage()"></i>Đặt lịch xem xe</a></div>
                                         <!--<div class="request-call"><a href="#" onClick="ShowMe1();"><i
                                                 class="fa fa-money"></i> Finance Calculator</a></div>-->
                                     </div>
@@ -1173,7 +1172,7 @@
                         <div class="form-block "><label>Ngày/ Tháng/ Năm
                             <main></main>
                         </label>
-                            <input class="date1" ng-model="ngay" name="" id="booklich" type="date" min="ngay"
+                            <input class="date1" ng-model="ngay" name="" id="booklich" type="date" min="{{min}}"
                                    ng-change="Valuechage()">
                         </div>
                         <!--<div class="form-block"><label>Địa chỉ</label>
