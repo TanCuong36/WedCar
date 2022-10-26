@@ -58,7 +58,7 @@ public class Car {
     private List<Accessories> accessoriesByIdcar;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "carByMaxe")
+    @OneToMany(mappedBy = "carByIdcar")
     private List<Appointment> appointmentsByIdcar;
 
     @JsonIgnore

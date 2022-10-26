@@ -3,9 +3,9 @@ package com.fptpoly.main.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +19,7 @@ public class Appointment {
     private int stt;
 
     @Basic
+    /*@Pattern(regexp = "yyyy-MM-dd")*/
     @Column(name = "Ngayhen")
     private Date ngayhen;
     @Basic
@@ -27,6 +28,7 @@ public class Appointment {
     @Basic
     @Column(name = "Loai")
     private String loai;
+
     @Basic
     @Column(name = "Ghichu")
     private String ghichu;
@@ -34,8 +36,11 @@ public class Appointment {
     @JoinColumn(name = "Matv", referencedColumnName = "Matv")
     private Account accountByMatv;
     @ManyToOne
+    @JoinColumn(name = "Manv", referencedColumnName = "Matv")
+    private Account accountByManv;
+    @ManyToOne
     @JoinColumn(name = "Idcar", referencedColumnName = "Idcar")
-    private Car carByMaxe;
+    private Car carByIdcar;
 
     
 }

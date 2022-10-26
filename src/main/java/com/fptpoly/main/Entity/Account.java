@@ -52,6 +52,10 @@ public class Account {
 
     @JsonIgnore
     @OneToMany(mappedBy = "accountByMatv")
+    private List<Appointment> appointmentsByManv;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "accountByMatv")
     private List<Billaccessories> billaccessoriesByMatv;
 
     @JsonIgnore

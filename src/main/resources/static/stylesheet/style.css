@@ -9028,12 +9028,12 @@ ul.shipping-pro li {
 }
 
 .ask-question-block {
-    left: 50%;
+    left: 40%;
     margin: auto;
     min-height: 150px;
     position: fixed;
-    top: 20%;
-    width: 300px;
+    top: 5%;
+    width: 600px;
     z-index: 10000;
     margin-left: -150px;
     background: #fff;
@@ -9055,6 +9055,22 @@ ul.shipping-pro li {
     width: 250px;
     border: 1px solid #ddd;
     text-align: left;
+}
+.form-block textarea {
+	display: block;
+	margin-right: 0px;
+	padding: 10px 10px;
+	width: 250px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+.form-block strong {
+	display: block;
+	margin-right: 0px;
+	padding: 10px 10px;
+	width: 250px;
+	border: 1px solid #ddd;
+	text-align: left;
 }
 .ask-question-block .form-inner .form-block button.button {width:100%; font-size:20px; padding:12px 15px; margin-top:10px; background-color: #3e6274; color:#fff; border-color:#111417}
 .ask-question-block h3 {

@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.http.HttpResponse;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +38,11 @@ public class WebMainController {
      TypecarRepository typecarRepository;
      @Autowired
      AccountRepository accountRepository;
-
+     @Autowired
+     AppointmentRepository appointmentRepository;
      public static String hangxe=null;
      public static fillCar fill;
+     public static String idcar;
 
 
      // trang mặc định
@@ -67,7 +72,7 @@ public class WebMainController {
      }
 
      // chức năng đăng xuất
-     @GetMapping("/logout")
+     @GetMapping("logout")
      public String logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
           new SecurityContextLogoutHandler().logout(request, response, authentication);
           return "redirect:/home";
@@ -134,7 +139,11 @@ public class WebMainController {
 
      @GetMapping(value = "home/car-detail")
      public String cardetail(Model model, @RequestParam("idcar")String id){
-          carRepository.findCarsByIdcar(id).getImagescarsByIdcar().get(0).getHinh();
+          Date x = new Date();
+          idcar = id;
+          System.out.println(appointmentRepository.findNgayhenAndCarByIdcar(x,id).size());
+          /*carRepository.findCarsByIdcar(id).getImagescarsByIdcar().get(0).getHinh();*/
+          model.addAttribute("thongtingio",appointmentRepository.findNgayhenAndCarByIdcar(x,id));
           model.addAttribute("Cardetail",carRepository.findCarsByIdcar(id));
           return "site/products/car-detail";
      }
@@ -167,7 +176,7 @@ public class WebMainController {
      // So sánh ô tô
 
      // Error 403
-     @GetMapping("/403")
+     @GetMapping("403")
      public String error(){
           return "site/security/404error";
      }
