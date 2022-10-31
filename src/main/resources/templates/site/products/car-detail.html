@@ -56,7 +56,7 @@
 
             $scope.Valuechage = function change() {
                 redate();
-                $http.get("/Appointment?id=CAR0001" + "&ngay=" + $scope.ngay.toDateString()).then(function (response) {
+                $http.get("/Appointment?ngay=" + $scope.ngay.toDateString()).then(function (response) {
                     $scope.appointment = response.data;
                     angular.forEach($scope.appointment, function (item, key) {
                         switch (item) {
@@ -104,11 +104,6 @@
         });
 
     </script>
-
-    <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p><marquee>Đặt lịch thành công</marquee></p>
-    </div>
     <div id="page">
         <div class="page-heading">
             <div class="breadcrumbs">

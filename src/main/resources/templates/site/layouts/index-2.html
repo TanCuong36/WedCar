@@ -11,9 +11,6 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('myctrl', function ($scope, $http) {
-
-
-
             $http.get('/CarsSale').then(function (response) {
                 $scope.CarsSale = response.data;
             })
@@ -26,7 +23,6 @@
                 })
             }
         });
-
     </script>
 
 
