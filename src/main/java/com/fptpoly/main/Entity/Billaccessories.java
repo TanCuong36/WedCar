@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +22,9 @@ public class Billaccessories {
     private String mahd;
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Ngaymua")
-    private Date ngaymua;
+    private Date ngaymua = new Date();
     @Basic
     @Column(name = "Ngaynhan")
     private Date ngaynhan;

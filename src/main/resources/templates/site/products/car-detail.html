@@ -18,7 +18,9 @@
                 /*UIkit.modal.dialog('<p class="uk-modal-body">Thêm Sản Phẩm vào giỏ thành công!</p>');*/
                 reload();
                 HideMe1();
-                UIkit.notification({message: 'Đặt Lịch Thành Công', status: 'success'});
+                re();
+                resetCheck()
+                UIkit.notification({message: '<strong style="color: black;font-size: 15px">Đặt Lịch Thành Công</strong>', status: 'success'});
             }
             function _error(res) {
                 var data = res.data;
@@ -46,16 +48,14 @@
                     }).then(_success, _error);
                 }
             }
-            function redate() {
+            function resetCheck() {
                 for(i=1;i<=8;++i){
                     document.getElementById('gio'+i).checked = false;
                     document.getElementById('gio'+i).removeAttribute("disabled");
                 }
             }
 
-
-            $scope.Valuechage = function change() {
-                redate();
+            function re(){
                 $http.get("/Appointment?ngay=" + $scope.ngay.toDateString()).then(function (response) {
                     $scope.appointment = response.data;
                     angular.forEach($scope.appointment, function (item, key) {
@@ -95,6 +95,11 @@
                         }
                     });
                 })
+            }
+            re()
+            $scope.Valuechage = function change() {
+                resetCheck();
+                re();
             }
             function reload() {
                 $http.get('/Appointment').then(response => {
@@ -1164,7 +1169,7 @@
                     </div>
                     <hr class="uk-divider-vertical" style="height: auto">
                     <div class="box2">
-                        <div class="form-block "><label>Ngày/ Tháng/ Năm
+                        <div class="form-block "><label>Ngày/ Tháng/ Năms
                             <main></main>
                         </label>
                             <input class="date1" ng-model="ngay" name="" id="booklich" type="date" min="{{min}}"

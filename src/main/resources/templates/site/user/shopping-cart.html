@@ -3,8 +3,7 @@
       layout:decorate="~{site/layouts/dashboardLayout.html}">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
 <section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
@@ -84,7 +83,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="page-title">
-                            <h2>Shopping Cart</h2>
+                            <h2>GIỎ HÀNG CỦA TÔI</h2>
                         </div>
                     </div>
                 </div>
@@ -139,7 +138,7 @@
                                                    maxlength="12" value="${mycart.soluong}"/>-->
                                         </td>
                                         <td class="a-center last">
-                                            <span class="uk-text-bold">{{cart.soluong*cart.gia| currency:'':0}} VNĐ</span>
+                                            <span class="uk-text-bold">{{total | currency:'':0}} VNĐ</span>
                                         </td>
                                         <td class="a-center last">
                                             <button ng-click="delete(cart.stt)" class="button remove-item">Remove item</button>
@@ -170,6 +169,8 @@
                     </div>
 
                     <!-- BEGIN CART COLLATERALS -->
+
+
                     <div class="cart-collaterals container">
                         <!-- BEGIN COL2 SEL COL 1 -->
 
@@ -185,8 +186,8 @@
                                     <form action="#" method="post" id="shipping-zip-form">
                                         <p>Thông tin giao hàng.</p>
                                         <ul class="form-list">
-
-
+                                          
+                                           
                                             <li>
                                                 <label for="postcode">Họ và tên</label>
                                                 <div class="input-box">
@@ -605,15 +606,15 @@
                                 <h2 class="title">Thanh toán</h2>
                                 <div class="radio ng-scope">
                                     <label class="ng-binding">
-                                        <input type="radio" value="1" name="optionsRadios"
-                                               class="ng-pristine ng-untouched ng-valid">
+                                        <input type="radio" value="1" name="optionsRadios" 
+                                        class="ng-pristine ng-untouched ng-valid">
                                         Thanh toán khi giao hàng (COD)
                                     </label>
                                 </div>
                                 <div class="radio ng-scope">
                                     <label class="ng-binding">
-                                        <input type="radio" value="2" name="optionsRadios"
-                                               class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                        <input type="radio" value="2" name="optionsRadios" 
+                                      class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                         Chuyển khoản qua ngân hàng
                                     </label>
                                 </div>
@@ -622,7 +623,7 @@
                                     <input type="hidden" name="remove" id="remove-coupone" value="0">
                                     <input class="input-text fullwidth" type="text" id="coupon_code" name="coupon_code"
                                            value="">
-                                    <button type="button" title="Apply Coupon" class="button coupon"
+                                    <button type="button" title="Apply Coupon" class="button coupon "
                                             onClick="discountForm.submit(false)"
                                             value="Apply Coupon"><span>Áp dụng phiếu giảm giá</span></button>
 
@@ -641,15 +642,15 @@
                                         <!-- Cart item -->
                                         <li class="header__cart-item">
                                             <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                                alt="" class="header__cart-img">
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -663,15 +664,15 @@
                                         </li>
                                         <li class="header__cart-item">
                                             <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                                alt="" class="header__cart-img">
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -685,15 +686,15 @@
                                         </li>
                                         <li class="header__cart-item">
                                             <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                                alt="" class="header__cart-img">
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -707,15 +708,15 @@
                                         </li>
                                         <li class="header__cart-item">
                                             <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                                alt="" class="header__cart-img">
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -727,32 +728,41 @@
                                                 </div>
                                             </div>
                                         </li>
+                                       
+                                        
+                                        
                                     </ul>
+
+
+
+                                   
+
+
                                     <style>
                                         /* Cart */
                                         .cart--ddas{
-                                            margin: auto;
-                                            position: fixed;
-                                            height: 100vh;
-                                            width: 400px;
-                                            top: 0;
-                                            background-color: rgb(255, 255, 255);
-                                            padding: 12px 20px;
-                                            left: -100%;
-                                            transition: .8s;
-                                            z-index: 1000;
-                                        }
-                                        .header__cart-heading-1 {
+                                        margin: auto;
+                                        position: fixed;
+                                        height: 100vh;
+                                        width: 400px;
+                                        top: 0;
+                                        background-color: rgb(255, 255, 255);
+                                        padding: 12px 20px;
+                                        left: -100%;
+                                        transition: .8s;
+                                        z-index: 1000;
+                                    }
+                                    .header__cart-heading-1 {
                                             display: flex;
                                             align-items: center;
                                             justify-content: space-between;
                                             border-bottom: 1px solid rgba(0, 0, 0, 0.09) ;
-                                        }
-                                        .header__cart-heading-total {
-                                            font-size: 14px;
+                                    }
+                                    .header__cart-heading-total {
+                                        font-size: 14px;
                                             color: #999;
                                             font-weight: 400;
-                                        }
+                                    }
                                         .header__cart-heading {
                                             text-align: center;
                                             margin: 8px 0 8px 12px;
@@ -777,7 +787,7 @@
                                             width: 100%;
                                             border-radius: 2px;
                                             box-shadow: 0 1px 3.125px 0 rgba(0, 0, 0, 0.2);
-
+                                            
                                             display: block;
                                             cursor: default;
                                             z-index: 1001;
@@ -867,7 +877,7 @@
                                         }
                                     </style>
 
-                                    <div class="divider"></div>
+
                                     <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
                                         <colgroup>
                                             <col>
@@ -876,7 +886,7 @@
                                         <tfoot>
                                         <tr>
                                             <td style="" class="a-left" colspan="1">
-                                                <strong>TỔNG HOÁ ĐƠN: </strong>
+                                                <strong>Phí vận chuyển</strong>
                                             </td>
                                             <td style="" class="a-right">
                                                 <strong><span class="price">$129.00</span></strong>
@@ -894,30 +904,15 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <input th:checked="${thongbao}" type="checkbox" id="my-modal-4" class="modal-toggle" />
-                                    <label for="my-modal-4" class="modal cursor-pointer">
-                                        <label class="modal-box relative" for="">
-                                            <h3 class="text-lg font-bold">THÔNG BÁO!</h3>
-                                            <p class="py-4">Đã đặt hàng thành công!</p><br>
-                                            <p class="py-4">Để biết trạng thái đơn hàng vui lòng vào trang chh tiết!</p>
-                                        </label>
-                                    </label>
-                                    <!-- The button to open modal -->
+
                                     <ul class="checkout">
-                                        <li><label for="my-modal" class="button btn-proceed-checkout"><span><span style="text-display:block;ecoration: none;" >THANH TOÁN</span></span></label>
-                                            <input type="checkbox" id="my-modal" class="modal-toggle" />
-                                            <div class="modal">
-                                                <div class="modal-box" style="font-size: 18px">
-                                                    <h3 class="font-bold text-lg">Xác Nhận Đơn Hàng!</h3>
-                                                    <p class="py-6">Vui lòng xác nhận lại đơn hàng !</p>
-                                                    <div class="modal-action">
-                                                        <label for="my-modal" class="btn" style="font-size: 13px">Huỷ!</label>
-                                                        <a th:href="@{/home/Payorder}"><label class="btn" style="font-size: 13px">Chốt Đơn!</label></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <li>
+                                            <button type="button" title="Proceed to Checkout"
+                                                    class="button btn-proceed-checkout"
+                                                    onClick=""><span><a style="text-decoration: none;" th:href="@{/home/check}">Xác nhận</a></span></button>
                                         </li>
                                         <br>
+                                        
                                         <br>
                                     </ul>
                                 </div>
@@ -932,7 +927,7 @@
                     <!--cart-collaterals-->
 
 
-                    </div>
+                </div>
                 <!--cart-->
 
             </div>

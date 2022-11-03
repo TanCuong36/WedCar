@@ -13746,3 +13746,11 @@ start*/
 	transform: scale(110%);
 	transition: 0.5s;
 }
+
+
+.recent-orders>p>a{
+	width: 19.5%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 11px;
+}

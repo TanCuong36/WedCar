@@ -3,79 +3,10 @@
       layout:decorate="~{site/layouts/dashboardLayout.html}">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
 <section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
-
-    <script>
-        var app = angular.module('myApp', []);
-        app.controller('myctrl', function ($scope, $http) {
-            function _success(res) {
-                reload();
-            }
-            function _error(res) {
-                var data = res.data;
-                var status = res.status;
-                var header = res.header;
-                var config = res.config;
-                alert("Error: " + status + ":" + data);
-            }
-            function reload(){
-                $http.get('/Inforcart').then(response =>{
-                    $scope.mycart = response.data;
-                    $scope.total = 0;
-                    $scope.totalItem = 0;
-                    angular.forEach($scope.mycart, function (item, key) {
-                        ++$scope.totalItem;
-                        $scope.total += (item.soluong * item.accessoriesByMalk.gia);
-                    });
-                    console.log($scope.mycart.length)
-                })
-            }
-
-            $scope.down = function(stt){
-                $http({
-                    method: "GET",
-                    url: "/Down/"+stt,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(_success, _error);
-            }
-
-            $scope.up = function(stt){
-                $http({
-                    method: "GET",
-                    url: "/Up/"+stt,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(_success, _error);
-            }
-
-            reload();
-
-            $scope.delete = function(stt){
-                UIkit.modal.confirm('Bạn Có Muốn Xoá Sản Phẩm Ra Khỏi Giỏ Hàng').then(function () {
-                    $http({
-                        method: "GET",
-                        url: "/Delete/"+stt,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(_success, _error);
-                    console.log('Confirmed.')
-                }, function () {
-                    console.log('Rejected.')
-                })
-            }
-
-        });
-
-
-    </script>
 
     <div id="page">
 
@@ -84,7 +15,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="page-title">
-                            <h2>Shopping Cart</h2>
+                            <h2>Xác nhận thanh toán</h2>
                         </div>
                     </div>
                 </div>
@@ -98,81 +29,13 @@
             <div class="main">
                 <div class="cart wow bounceInUp animated">
 
-                    <div class="table-responsive shopping-cart-tbl  container">
-                        <form>
-                            <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
-                            <fieldset>
-                                <table style="font-size: 15px" id="shopping-cart-table" class="data-table cart-table table-striped">
-
-                                    <thead>
-                                    <tr class="first last">
-                                        <th><span class="nobr">Tên sản phẩm</span></th>
-                                        <th class="a-center">Đơn giá</th>
-                                        <th class="a-center last" style="padding-left: 45px">Số lượng</th>
-                                        <th class="a-center">Tổng</th>
-                                        <th class="a-center">Tuỳ chỉnh</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="first last odd" ng-repeat="cart in mycart" ><!--th:each="mycart : ${Mycarts}"-->
-                                        <td> <!--tên sản phẩm-->
-                                            <h2 style="font-size: 15px" class="uk-text-bold product-name">
-                                                <a href="product-detail.html">{{cart.accessoriesByMalk.ten}}</a>
-                                            </h2>
-                                        </td>
-                                        <!--<td class="a-center hidden-table">
-                                            <a href="#" class="edit-bnt" title="Edit item parameters"></a>
-                                        </td>-->
-                                        <td>
-                                            <span class="cart-price">
-                                                <span class="uk-text-bold">{{cart.accessoriesByMalk.gia|currency:'':0}} VNĐ</span>
-                                            </span>
-                                        </td>
-                                        <td class="a-center last">
-                                            <div class="custom pull-left">
-                                                <button ng-click="down(cart.stt)" class="reduced items-count" type="button"><i class="fa fa-minus">&nbsp;</i></button>
-                                                <span class="uk-text-bold" style="padding-left: 7px;padding-right: 10px">{{cart.soluong}}</span>
-                                                <button ng-click="up(cart.stt)" class="increase items-count" type="button"><i class="fa fa-plus">&nbsp;</i></button>
-                                            </div>
-                                            <!--<input type="number"
-                                                   class="input-text qty"
-                                                   maxlength="12" value="${mycart.soluong}"/>-->
-                                        </td>
-                                        <td class="a-center last">
-                                            <span class="uk-text-bold">{{cart.soluong*cart.gia| currency:'':0}} VNĐ</span>
-                                        </td>
-                                        <td class="a-center last">
-                                            <button ng-click="delete(cart.stt)" class="button remove-item">Remove item</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr class="first last">
-                                        <td colspan="50" class="a-right last">
-                                            <button type="button" title="Continue Shopping" class="button btn-continue"
-                                                    onClick=""><span><span>Tiếp tục mua sắm</span></span></button>
-                                            <button type="submit" name="update_cart_action" value="update_qty"
-                                                    title="Update Cart"
-                                                    class="button btn-update">
-                                                <span><span>Cập nhật giỏ hàng</span></span></button>
-                                            <button type="submit" name="update_cart_action" value="empty_cart"
-                                                    title="Clear Cart"
-                                                    class="button btn-empty" id="empty_cart_button"><span><span>Xóa giỏ hàng</span></span>
-                                            </button>
-
-                                        </td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-
-                            </fieldset>
-                        </form>
-                    </div>
+                    
 
                     <!-- BEGIN CART COLLATERALS -->
+
+
                     <div class="cart-collaterals container">
                         <!-- BEGIN COL2 SEL COL 1 -->
-
 
                         <!-- BEGIN TOTALS COL 2 -->
                         <div class="col-sm-4">
@@ -180,19 +43,18 @@
 
                             <div class="shipping">
 
-                                <h3>1.Địa chỉ thanh toán và giao hàng</h3>
+                                <h3>Thông tin giao hàng</h3>
                                 <div class="shipping-form">
                                     <form action="#" method="post" id="shipping-zip-form">
                                         <p>Thông tin giao hàng.</p>
                                         <ul class="form-list">
-
 
                                             <li>
                                                 <label for="postcode">Họ và tên</label>
                                                 <div class="input-box">
                                                     <input class="input-text validate-postcode" type="text"
                                                            id="postcode" name="estimate_postcode"
-                                                           value="">
+                                                           value="" placeholder="Bùi Thanh Nhật">
                                                 </div>
                                             </li>
                                             <li>
@@ -200,7 +62,7 @@
                                                 <div class="input-box">
                                                     <input class="input-text validate-postcode" type="text"
                                                            id="postcode" name="estimate_postcode"
-                                                           value="">
+                                                           value="" placeholder="nhat@gmail.com">
                                                 </div>
                                             </li>
                                             <li>
@@ -208,7 +70,7 @@
                                                 <div class="input-box">
                                                     <input class="input-text validate-postcode" type="text"
                                                            id="postcode" name="estimate_postcode"
-                                                           value="">
+                                                           value="" placeholder="Liên chiểu">
                                                 </div>
                                             </li>
                                             <li>
@@ -216,7 +78,7 @@
                                                 <div class="input-box">
                                                     <input class="input-text validate-postcode" type="text"
                                                            id="postcode" name="estimate_postcode"
-                                                           value="">
+                                                           value="" placeholder="0373944018">
                                                 </div>
                                             </li>
                                             <li>
@@ -467,7 +329,7 @@
                                                         <option value="VU">Vanuatu</option>
                                                         <option value="VA">Vatican City</option>
                                                         <option value="VE">Venezuela</option>
-                                                        <option value="VN">Vietnam</option>
+                                                        <option value="VN" selected="selected">Vietnam</option>
                                                         <option value="WF">Wallis and Futuna</option>
                                                         <option value="EH">Western Sahara</option>
                                                         <option value="YE">Yemen</option>
@@ -489,8 +351,7 @@
                                                         <option value="3" title="American Samoa">American Samoa</option>
                                                         <option value="4" title="Arizona">Arizona</option>
                                                         <option value="5" title="Arkansas">Arkansas</option>
-                                                        <option value="6" title="Armed Forces Africa">Armed Forces
-                                                            Africa
+                                                        <option value="6" title="Armed Forces Africa"selected="selected">Đà Nẵng
                                                         </option>
                                                         <option value="7" title="Armed Forces Americas">Armed Forces
                                                             Americas
@@ -579,11 +440,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="buttons-set11">
-                                            <button type="button" title="Get a Quote"
-                                                    onClick="coShippingMethodForm.submit()"
-                                                    class="button get-quote"><span>Tiếp tục</span></button>
-                                        </div>
+                                        
                                         <!--buttons-set11-->
                                     </form>
 
@@ -596,7 +453,7 @@
                         <div class="col-sm-4">
 
                             <div class="discount">
-                                <h3>2.Thanh toán và vận chuyển</h3>
+                                <h3>Thanh toán và vận chuyển</h3>
                                 <div class="form-group ">
                                     <select class="form-control ng-pristine ng-valid ng-touched">
                                         <option value="number:1" label="Giao hàng tận nơi - 40,000" selected="selected">
@@ -605,28 +462,19 @@
                                 <h2 class="title">Thanh toán</h2>
                                 <div class="radio ng-scope">
                                     <label class="ng-binding">
-                                        <input type="radio" value="1" name="optionsRadios"
-                                               class="ng-pristine ng-untouched ng-valid">
+                                        <input type="radio" value="1" name="optionsRadios" 
+                                        class="ng-pristine ng-untouched ng-valid">
                                         Thanh toán khi giao hàng (COD)
                                     </label>
                                 </div>
                                 <div class="radio ng-scope">
                                     <label class="ng-binding">
-                                        <input type="radio" value="2" name="optionsRadios"
-                                               class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                        <input type="radio" value="2" name="optionsRadios" 
+                                      class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                         Chuyển khoản qua ngân hàng
                                     </label>
                                 </div>
-                                <form id="discount-coupon-form" action="#" method="post">
-                                    <label for="coupon_code">Nhập mã phiếu giảm giá của bạn nếu bạn có.</label>
-                                    <input type="hidden" name="remove" id="remove-coupone" value="0">
-                                    <input class="input-text fullwidth" type="text" id="coupon_code" name="coupon_code"
-                                           value="">
-                                    <button type="button" title="Apply Coupon" class="button coupon"
-                                            onClick="discountForm.submit(false)"
-                                            value="Apply Coupon"><span>Áp dụng phiếu giảm giá</span></button>
-
-                                </form>
+                                
 
                             </div>
                             <!--discount-->
@@ -635,21 +483,20 @@
 
                         <div class="col-sm-4">
                             <div class="totals">
-                                <h3>3.Thông tin đơn hàng</h3>
+                                <h3>Thông tin đơn hàng</h3>
                                 <div class="inner">
                                     <ul class="header__cart-list-item">
                                         <!-- Cart item -->
                                         <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                            
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -662,16 +509,15 @@
                                             </div>
                                         </li>
                                         <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                            
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
                                                     <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                            class="header__cart-item-price">$49000.00</span>
                                                         <span
-                                                                class="header__cart-item-multiply">x</span>
+                                                            class="header__cart-item-multiply">x</span>
                                                         <span class="header__cart-item-qnt">2</span>
                                                     </div>
                                                 </div>
@@ -683,76 +529,42 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span
-                                                                class="header__cart-item-price">$49000.00</span>
-                                                        <span
-                                                                class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span
-                                                                class="header__cart-item-price">$49000.00</span>
-                                                        <span
-                                                                class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>
+                                      
+                                       
+                                        
+                                        
                                     </ul>
+
+
+
+                                   
+
+
                                     <style>
                                         /* Cart */
                                         .cart--ddas{
-                                            margin: auto;
-                                            position: fixed;
-                                            height: 100vh;
-                                            width: 400px;
-                                            top: 0;
-                                            background-color: rgb(255, 255, 255);
-                                            padding: 12px 20px;
-                                            left: -100%;
-                                            transition: .8s;
-                                            z-index: 1000;
-                                        }
-                                        .header__cart-heading-1 {
+                                        margin: auto;
+                                        position: fixed;
+                                        height: 100vh;
+                                        width: 400px;
+                                        top: 0;
+                                        background-color: rgb(255, 255, 255);
+                                        padding: 12px 20px;
+                                        left: -100%;
+                                        transition: .8s;
+                                        z-index: 1000;
+                                    }
+                                    .header__cart-heading-1 {
                                             display: flex;
                                             align-items: center;
                                             justify-content: space-between;
                                             border-bottom: 1px solid rgba(0, 0, 0, 0.09) ;
-                                        }
-                                        .header__cart-heading-total {
-                                            font-size: 14px;
+                                    }
+                                    .header__cart-heading-total {
+                                        font-size: 14px;
                                             color: #999;
                                             font-weight: 400;
-                                        }
+                                    }
                                         .header__cart-heading {
                                             text-align: center;
                                             margin: 8px 0 8px 12px;
@@ -777,7 +589,7 @@
                                             width: 100%;
                                             border-radius: 2px;
                                             box-shadow: 0 1px 3.125px 0 rgba(0, 0, 0, 0.2);
-
+                                            
                                             display: block;
                                             cursor: default;
                                             z-index: 1001;
@@ -786,7 +598,7 @@
                                         .header__cart-list-item {
                                             padding-left: 0;
                                             list-style: none;
-                                            height: 65vh;
+                                            height: 50vh;
                                             overflow-y: auto;
                                         }
 
@@ -867,7 +679,7 @@
                                         }
                                     </style>
 
-                                    <div class="divider"></div>
+
                                     <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
                                         <colgroup>
                                             <col>
@@ -876,7 +688,7 @@
                                         <tfoot>
                                         <tr>
                                             <td style="" class="a-left" colspan="1">
-                                                <strong>TỔNG HOÁ ĐƠN: </strong>
+                                                <strong>Phí vận chuyển</strong>
                                             </td>
                                             <td style="" class="a-right">
                                                 <strong><span class="price">$129.00</span></strong>
@@ -894,30 +706,15 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <input th:checked="${thongbao}" type="checkbox" id="my-modal-4" class="modal-toggle" />
-                                    <label for="my-modal-4" class="modal cursor-pointer">
-                                        <label class="modal-box relative" for="">
-                                            <h3 class="text-lg font-bold">THÔNG BÁO!</h3>
-                                            <p class="py-4">Đã đặt hàng thành công!</p><br>
-                                            <p class="py-4">Để biết trạng thái đơn hàng vui lòng vào trang chh tiết!</p>
-                                        </label>
-                                    </label>
-                                    <!-- The button to open modal -->
+
                                     <ul class="checkout">
-                                        <li><label for="my-modal" class="button btn-proceed-checkout"><span><span style="text-display:block;ecoration: none;" >THANH TOÁN</span></span></label>
-                                            <input type="checkbox" id="my-modal" class="modal-toggle" />
-                                            <div class="modal">
-                                                <div class="modal-box" style="font-size: 18px">
-                                                    <h3 class="font-bold text-lg">Xác Nhận Đơn Hàng!</h3>
-                                                    <p class="py-6">Vui lòng xác nhận lại đơn hàng !</p>
-                                                    <div class="modal-action">
-                                                        <label for="my-modal" class="btn" style="font-size: 13px">Huỷ!</label>
-                                                        <a th:href="@{/home/Payorder}"><label class="btn" style="font-size: 13px">Chốt Đơn!</label></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <li>
+                                            <button type="button" title="Proceed to Checkout"
+                                                    class="button btn-proceed-checkout"
+                                                    onClick=""><span><a style="text-decoration: none;" th:href="@{/home/hoadon-detail}">Đặt hàng</a></span></button>
                                         </li>
                                         <br>
+                                        
                                         <br>
                                     </ul>
                                 </div>
@@ -932,7 +729,7 @@
                     <!--cart-collaterals-->
 
 
-                    </div>
+                </div>
                 <!--cart-->
 
             </div>
@@ -1101,7 +898,7 @@
             <li><a href="#">Pages</a>
                 <ul class="level1">
                     <li class="level1"><a href="about-us.html"> <span>Về chúng tôi</span> </a></li>
-                    <li class="level1 nav-10-4"><a href="shopping-cart.html"> <span>Trang giỏ hàng</span> </a></li>
+                    <li class="level1 nav-10-4"><a href="../user/shopping-cart.html"> <span>Trang giỏ hàng</span> </a></li>
                     <li class="level1 first parent"><a href="checkout.html"><span>Thanh toán</span></a>
                         <!--sub sub category-->
                         <ul class="level2 right-sub">

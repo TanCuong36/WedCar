@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" tmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{site/layouts/dashboardLayout.html}">
 
 <head>
@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-xs-12">
         <div class="page-title">
-<h2>Trang cá nhân</h2>
+<h2>Chi tiết đơn hàng</h2>
 </div>
         </div>
       </div>
@@ -30,124 +30,138 @@
             
             <!--page-title--> 
             <!-- BEGIN DASHBOARD-->
-            <div class="dashboard">
-              <div class="welcome-msg">
-                <p class="hello"><strong>Xin chào, Võ Thái</strong></p>
-                <p>Từ Trang tổng quan tài khoản của tôi, bạn có thể xem ảnh chụp nhanh về hoạt động tài khoản gần đây và cập nhật thông tin tài khoản của mình. Chọn một liên kết bên dưới để xem hoặc chỉnh sửa thông tin.</p>
-              </div>
-              <div class="recent-orders">
-                <div class="title-buttons"> <strong>Những đơn đặt hàng gần đây</strong> <a href="#">Xem tất cả</a> </div>
-                <div class="table-responsive">
-                  <table class="data-table table-striped" id="my-orders-table">
-                    <colgroup>
-                    <col width="10%">
-                    <col width="12%">
-                    <col width="12%">
-                    <col width="18%">
-                    <col width="1">
-                    <col width="20%">
-                    </colgroup>
-                    <thead>
-                      <tr class="first last">
-                        <th>Đơn hàng # </th>
-                        <th>Ngày</th>
-                        <th>Gửi đến</th>
-                        <th><span class="nobr">Tổng đơn hàng</span></th>
-                        <th>Trạng thái</th>
-                        <th>&nbsp;</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="first odd" th:each="donhang:${donhangs}">
-                        <td><strong th:text="${donhang.getMahd()}" /></td>
-                        <td><span class="nobr" th:text="${donhang.getNgaymua()}" /></td>
-                        <td><strong th:text="${donhang.accountByMatv.matv}" /></td>
-                        <td><span class="price" th:text="${#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$','')+' VNĐ'}" /></td>
-                        <td><em >Đang Chờ Xác Nhận</em></td>
-                        <td class="a-center last"><span class="nobr"> <a href="#">Xem đơn đặt hàng</a> </span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <!--table-responsive-->                 
-              </div>
-              <!--recent-orders-->
-              <div class="box-account">
-                <div class="page-title">
-                  <h2>Thông tin tài khoản</h2>
-                </div>
-                <div class="col2-set">
-                  <div class="col-1">
-                    <div class="box">
-                      <div class="box-title">
-                        <h5>Thông tin liên lạc</h5>
-                        <a href="#">Chỉnh sửa</a> </div>
-                      <!--box-title-->
-                      <div class="box-content">
-                        <p> Võ Thái<br>
-                          vo.thai@gmail.com<br>
-                          <a href="#">Đổi mật khẩu</a> </p>
-                      </div>
-                      <!--box-content--> 
-                    </div>
-                    <!--box--> 
+            <div class="myorder-content myorder-detail-content clearfix" >
+              <h1 class="title"><span >Đơn hàng của tôi</span></h1>
+              <div class="myorder-block">
+                  <div class="row-title docs">Đơn hàng của <a href="#">Nhat Thanh</a><b> (#100000045)</b> lúc <span class="grey">20:57 21/10/2022</span></div>
+                  <div class="table-responsive clearfix myorder-info">
+                      <table class="table table-mycart">
+                          <thead>
+                              <tr>
+                                  <th>STT</th>
+                                  <th colspan="2">Tên sản phẩm</th>
+                                  <th>Mã sản phẩm</th>
+                                  <th>Giá</th>
+                                  <th>Số lượng</th>
+                                  <th>Thành tiền</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                                  <tr>
+                                      <td>1</td>
+                                      <td class="image">
+                                          <a href="/san-pham/ford-escape.html"><img class="img-responsive" th:src="@{/products-images/p1.jpg}" width="20%"
+                                            height="50px"></a>
+                                      </td>
+                                      <td>
+                                          <a href="/san-pham/ford-escape.html">Ford Escape</a>
+                                          <!-- ngIf: it.IsVariant==true -->
+                                      </td>
+                                      <td>ford-escape</td>
+                                      <td>20.000.000đ</td>
+                                      <td>1</td>
+                                      <td>20.000.000đ</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td class="image">
+                                        <a href="/san-pham/ford-escape.html"><img class="img-responsive" th:src="@{/products-images/p1.jpg}" width="20%"
+                                          height="50px"></a>
+                                    </td>
+                                    <td>
+                                        <a href="/san-pham/ford-escape.html">Ford Escape</a>
+                                        <!-- ngIf: it.IsVariant==true -->
+                                    </td>
+                                    <td>ford-escape</td>
+                                    <td>20.000.000đ</td>
+                                    <td>1</td>
+                                    <td>20.000.000đ</td>
+                                </tr>
+                                <tr>
+                                  <td>1</td>
+                                  <td class="image">
+                                      <a href="/san-pham/ford-escape.html"><img class="img-responsive" th:src="@{/products-images/p1.jpg}" width="20%"
+                                        height="50px"></a>
+                                  </td>
+                                  <td>
+                                      <a href="/san-pham/ford-escape.html">Ford Escape</a>
+                                      <!-- ngIf: it.IsVariant==true -->
+                                  </td>
+                                  <td>ford-escape</td>
+                                  <td>20.000.000đ</td>
+                                  <td>1</td>
+                                  <td>20.000.000đ</td>
+                              </tr>
+                                  
+                              <tr>
+                                  <td class="border-right" colspan="3">
+                                      <div class="box-customer-content">
+                                          <div class="title docs"><span>Thông tin giao hàng</span></div>
+                                          <div>[Anh/Chị]<b> Nhat Thanh</b></div>
+                                          <div>
+                                              nhat123@gmail.com |
+                                              Đà nẵng |
+                                              0373947017
+                                          </div>
+                                      </div>
+                                      <div class="box-customer-content">
+                                          <div class="title"><span>Thông tin thanh toán</span></div>
+                                          <div>[Anh/Chị]<b>Nhat Thanh</b></div>
+                                          <div>
+                                              nhat123@gmail.com |
+                                              Đà nẵng |
+                                              0373947017
+                                          </div>
+                                      </div>
+                                  </td>
+                                  <td colspan="4">
+                                      <table class="table">
+                                          <tbody>
+                                              <tr>
+                                                  <td class="text-left"><b>Tổng tiền thanh toán</b></td>
+                                                  <td class="text-right ">
+                                                      <b class="total-payment">
+                                                          20.000.000đ
+                                                      </b>
+                                                      <div class="help-block">Bao gồm VAT</div>
+                                                  </td>
+                                              </tr>
+                                              <tr class="text-center order-stt" style="background-color: #c6d535;">
+                                                  <td colspan="2">
+                                                      <div class="docs">Trạng thái đơn hàng</div>
+                                                      <div class="docs"><b>Chưa</b></div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
                   </div>
-                  <div class="col-2">
-                    <div class="box">
-                      <div class="box-title">
-                        <h5>Bản tin</h5>
-                        <a href="#">Chỉnh sửa</a> </div>
-                      <!--box-title-->
-                      <div class="box-content">
-                        <p> Bạn hiện chưa đăng ký bất kỳ bản tin nào. </p>
-                      </div>
-                      <!--box-content--> 
-                    </div>
-                    <!--box--> 
+                  <div class=" button-1 text-right" style="padding: 10px 20px 8px 20px">
+                      <a class="btn btn-default" th:href="@{/home/dashboard}">Trở về danh sách đơn hàng</a>
+                      <a class="btn btn-primary" th:href="@{/home/listphukien}">Tiếp tục mua hàng</a>
                   </div>
-                </div>
-                <div class="col2-set">
-                  <div class="box">
-                    <div class="box-title">
-                      <h4>Sổ địa chỉ</h4>
-                      <a href="#">Quản lý địa chỉ</a> </div>
-                    <!--box-title-->
-                    <div class="box-content">
-                      <div class="col-1">
-                        <h5>Địa chỉ thanh toán mặc định</h5>
-                        <address>
-                        Võ Thái<br>
-                        Số 47 Nguyễn Trường Tộ<br>
-                        AL,  Alabama, 42136<br>
-                        Việt Nam<br>
-                        T: 4563 <br>
-                        <a href="#">Chỉnh sửa địa chỉ</a>
-                        </address>
-                      </div>
-                      <div class="col-2">
-                        <h5>Địa chỉ giao hàng mặc định</h5>
-                        <address>
-                          Võ Thái<br>
-                          Số 47 Nguyễn Trường Tộ<br>
-                          AL,  Alabama, 42136<br>
-                          Việt Nam<br>
-                          T: 4563 <br>
-                          <a href="#">Chỉnh sửa địa chỉ</a>
-                        </address>
-                      </div>
-                    </div>
-                    <!--box-content--> 
-                  </div>
-                  <!--box--> 
-                </div>
               </div>
-            </div>
+              <style>
+                .title {
+                  font-weight: 600;
+                }
+                .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+                  vertical-align: inherit;
+                }
+                .image {
+                  width: auto;
+                  height: 70px;
+                }
+              </style>
           </div>
         </section>
         <!--col-main col-sm-9 wow bounceInUp animated-->
-        <div  th:replace="site/layouts/category::category">
+          <div  th:replace="site/layouts/category::category">
 
-        </div>
+          </div>
         <!--col-right sidebar col-sm-3 wow bounceInUp animated--> 
       </div>
       <!--row--> 

@@ -1,8 +1,13 @@
 package com.fptpoly.main.Controller;
 
 import com.fptpoly.main.Dao.*;
+import com.fptpoly.main.Entity.Billaccessories;
+import com.fptpoly.main.Entity.Billaccessoriesdetail;
 import com.fptpoly.main.Entity.Cartaccessories;
 import com.fptpoly.main.Entity.fillCar;
+import groovy.util.Factory;
+import groovy.util.logging.Slf4j;
+import org.slf4j.ILoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
@@ -21,8 +26,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.logging.Logger;
 
 @Controller
+@Slf4j
 @RequestMapping("/")
 public class WebMainController {
 
@@ -40,9 +48,14 @@ public class WebMainController {
      AccountRepository accountRepository;
      @Autowired
      AppointmentRepository appointmentRepository;
+     @Autowired
+     BillaccessoriesRepository billaccessoriesRepository;
+     @Autowired
+     BillaccessoriesdetailRepository billaccessoriesdetailRepository;
      public static String hangxe=null;
      public static fillCar fill;
      public static String idcar;
+     public static boolean thongbao= false;
 
 
      // trang mặc định
@@ -192,24 +205,80 @@ public class WebMainController {
 
      //Shop Cart
      @GetMapping("home/member/shopping-cart")
-     public String giohang(){
+     public String giohang(Model model){
           /*UserDetails userDetail =(UserDetails) authentication.getPrincipal();
           System.out.println("Tên Đăng Nhập: "+userDetail.getUsername()+"Pass "+userDetail.getAuthorities());
           model.addAttribute("Mycarts",cartaccessoriesRepository.findAllByMatv(userDetail.getUsername()));*/
+          model.addAttribute("thongbao",thongbao);
+          thongbao=false;
           return "site/shopping-cart/shopping-cart";
      }
 
+     /*@GetMapping("home/o")
+     public String quenmatkhau(Model model){
+          return "site/security/quenmatkhau";
+     }*/
      @GetMapping("home/checkout")
      public String checkout(Model model){
-          return "site/oders/checkout-billing-info";
+          return "site/oders/check";
+     }
+
+     @GetMapping("home/Payorder")
+     public String payorder(Model model,Principal principal){
+          try {
+               Random rn = new Random();
+               int HoadonNumber = rn.nextInt(99999999)+10000000;
+               String Mahoadon = "HD"+HoadonNumber;
+               double tongtien=0;
+               // tạo và lưu hoá đơn
+               Billaccessories billaccessories = new Billaccessories();
+               billaccessories.setMahd(Mahoadon);
+               billaccessories.setAccountByMatv(accountRepository.findAllByMatv(principal.getName()));
+               /*billaccessories.setNgaynhan(null);*/
+               for (Cartaccessories cartaccessories :cartaccessoriesRepository.findAllByAccount_Matv(principal.getName())) {
+                    tongtien += cartaccessories.getSoluong()*cartaccessories.getAccessoriesByMalk().getGia();
+               }
+               billaccessories.setTongtien(tongtien);
+               billaccessories.setTrangthai("PENDING");
+               billaccessoriesRepository.save(billaccessories);
+               // tạo vào lưu hoá đơn chi tiết
+               for (Cartaccessories cartaccessories : cartaccessoriesRepository.findAllByAccount_Matv(principal.getName())){
+                    Billaccessoriesdetail billaccessoriesdetail = new Billaccessoriesdetail();
+                    billaccessoriesdetail.setBillaccessoriesByMahd(billaccessoriesRepository.findAllByMahd(Mahoadon));
+                    billaccessoriesdetail.setAccessoriesByMalk(cartaccessories.getAccessoriesByMalk());
+                    billaccessoriesdetail.setSoluong(cartaccessories.getSoluong());
+                    billaccessoriesdetail.setGia(cartaccessories.getAccessoriesByMalk().getGia());
+                    billaccessoriesdetail.setGhichu("Không Có Chiu Hết 😂");
+                    billaccessoriesdetailRepository.save(billaccessoriesdetail);
+               }
+               System.out.println("Tao Đơn Hàng Thành Công");
+          }catch (Exception e){
+               System.err.println(e);
+          }
+          thongbao = true;
+
+          return "redirect:/home/member/shopping-cart";
+     }
+     @GetMapping("home/donhang")
+     public String donhang(Model model){
+          return "site/user/donhang";
+     }
+     @GetMapping("home/user-info")
+     public String user_info(Model model){
+          return "site/user/user-info";
+     }
+     @GetMapping("home/hoadon")
+     public String hoadon(Model model){
+          return "site/user/hoadon-detail";
      }
      @GetMapping("home/wishlist")
      public String wishlist(Model model){
           return "site/wishlist";
      }
      @GetMapping("home/dashboard")
-     public String dashboard(Model model){
-          return "site/oders/dashboard";
+     public String dashboard(Model model,Principal principal){
+          model.addAttribute("donhangs",billaccessoriesRepository.findAllByTrangthaiAndAccountByMatv_Matv("PENDING",principal.getName()));
+          return "site/user/donhang";
      }
      @GetMapping("home/contact")
      public String contact(Model model){
