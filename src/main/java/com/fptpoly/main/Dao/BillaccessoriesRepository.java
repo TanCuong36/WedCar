@@ -10,5 +10,6 @@ import java.util.List;
 public interface BillaccessoriesRepository extends JpaRepository<Billaccessories, String> {
     Billaccessories findAllByMahd(String mahd);
 
-    List<Billaccessories> findAllByTrangthaiAndAccountByMatv_Matv(String status,String matv);
+    void deleteAllByMahd(String id);
+    List<Billaccessories> findAllByTrangthaiAndAccountByMatv_MatvOrderByMahdDesc(String status,String matv);
 }

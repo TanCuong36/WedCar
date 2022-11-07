@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<section layout:fragment="content" style="margin-top: 108px;">
+<section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
     <div id="page">
 
         <div class="page-heading">
@@ -61,10 +61,10 @@
                                             <colgroup>
                                                 <col width="18%">
                                                 <col width="12%">
-                                                <col width="12%">
+                                                <col width="10%">
                                                 <col width="25%">
-                                                <col width="20%">
-                                                <col width="20%">
+                                                <col width="15%">
+                                                <col width="10%">
                                             </colgroup>
                                             <thead>
                                             <tr class="first last">
@@ -79,10 +79,33 @@
                                             <tbody>
                                             <tr class="first odd" th:each="donhang:${donhangs}">
                                                 <td><strong th:text="${donhang.getMahd()}"/></td>
-                                                <td><span class="nobr" th:text="${donhang.getNgaymua()}"/></td>
+                                                <td><strong><span class="nobr"
+                                                                  th:text="${#dates.format(donhang.getNgaymua(),'yyyy-MM-dd HH:mm:ss')}"/></strong>
+                                                </td>
                                                 <td><strong th:text="${donhang.accountByMatv.matv}"/></td>
-                                                <td><span class="price"
-                                                          th:text="${#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$','')+' VNĐ'}"/>
+                                                <td><!--<span class="price"
+                                                          th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')}"/>--><span
+                                                        class="inline-flex items-center justify-center rounded-full bg-purple-200 px-2.5 py-0.5 text-red-700"
+                                                >
+  <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="-ml-1 mr-1.5 h-4 w-4"
+  >
+    <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+
+  <p class="whitespace-nowrap text-sm"><span class="price"
+                                             th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')+' VNĐ'}"/></p>
+</span>
+
                                                 </td>
                                                 <td><span
                                                         class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
@@ -101,8 +124,19 @@
 </span></td>
                                                 <td class="a-center last"><span class="nobr"> <a
                                                         th:href="@{/home/hoadon}">Xem đơn đặt hàng</a><span
-                                                        class="separator"> | </span> <a href="#" class="link-reorder">Huỷ đơn</a> </span> </span>
+                                                        class="separator"> | </span><a th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}" class="btn">Yay!</a><!--<label for="my-modal" style="max-width: 50px;background: #3e6274" class="btn">Huỷ Đơn</label>--></span>
+                                                    <input type="checkbox" id="my-modal" class="modal-toggle"/>
+                                                    <div class="modal">
+                                                        <div class="modal-box">
+                                                            <h3 class="font-bold text-lg">Bạn Muốn Huỷ Đơn Hàng !!!</h3>
+                                                            <div class="modal-action">
+                                                                <label for="my-modal" class="btn">Cancel!</label>
+                                                                <a th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}" class="btn">Yay!</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
+
                                             </tr>
                                             </tbody>
                                         </table>

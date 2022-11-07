@@ -259,6 +259,14 @@ public class WebMainController {
 
           return "redirect:/home/member/shopping-cart";
      }
+     @GetMapping("home/pending")
+     public String pending(Model model,@RequestParam("idhd")String id){
+        billaccessoriesdetailRepository.deleteBillaccessoriesdetailsByBillaccessoriesByMahd_Mahd(id);
+        billaccessoriesRepository.delete(billaccessoriesRepository.findAllByMahd(id));
+        return "redirect:/home/dashboard";
+     }
+
+
      @GetMapping("home/donhang")
      public String donhang(Model model){
           return "site/user/donhang";
@@ -277,7 +285,7 @@ public class WebMainController {
      }
      @GetMapping("home/dashboard")
      public String dashboard(Model model,Principal principal){
-          model.addAttribute("donhangs",billaccessoriesRepository.findAllByTrangthaiAndAccountByMatv_Matv("PENDING",principal.getName()));
+          model.addAttribute("donhangs",billaccessoriesRepository.findAllByTrangthaiAndAccountByMatv_MatvOrderByMahdDesc("PENDING",principal.getName()));
           return "site/user/donhang";
      }
      @GetMapping("home/contact")
