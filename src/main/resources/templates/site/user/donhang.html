@@ -6,10 +6,32 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
 <section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
-    <div id="page">
 
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myctrl', function ($scope, $http) {
+            /*reload();*/
+            function _success(res) {
+
+            }
+
+            function _error(res) {
+                var data = res.data;
+                var status = res.status;
+                var header = res.header;
+                var config = res.config;
+                alert("Error: " + status + ":" + data);
+            }
+
+        });
+
+    </script>
+
+
+    <div id="page">
         <div class="page-heading">
             <div class="container">
                 <div class="row">
@@ -21,6 +43,7 @@
                 </div>
             </div>
         </div>
+        s
 
         <!-- BEGIN Main Container col2-right -->
         <section class="main-container col2-right-layout">
@@ -35,28 +58,81 @@
                             <div class="dashboard">
                                 <div class="welcome-msg">
                                     <p class="hello"><strong>Xin chào, Võ Thái</strong></p>
-                                    <p>Từ Trang tổng quan tài khoản của tôi, bạn có thể xem ảnh chụp nhanh về hoạt động
-                                        tài khoản gần đây và cập nhật thông tin tài khoản của mình. Chọn một liên kết
+                                    <p>Từ Trang tổng quan tài khoản của tôi, bạn có thể xem ảnh chụp nhanh về hoạt
+                                        động
+                                        tài khoản gần đây và cập nhật thông tin tài khoản của mình. Chọn một liên
+                                        kết
                                         bên dưới để xem hoặc chỉnh sửa thông tin.</p>
                                 </div>
                                 <div class="recent-orders">
-                                    <div class="title-buttons"><strong>Những đơn đặt hàng gần đây</strong> <a href="#">Xem
+                                    <div class="title-buttons"><strong>Những đơn đặt hàng gần đây</strong> <a
+                                            href="#">Xem
                                         tất cả</a></div>
                                     <hr class="uk-divider-icon">
-                                    <p uk-margin style="margin-left:20px ">
-                                        <a class="uk-button uk-button-default"
-                                           style="border-bottom: 3px solid orangered">Đang xử lý</a>
-                                        <a class="uk-button uk-button-default" style="border-bottom: 3px solid purple">Đang
-                                            đóng gói</a>
-                                        <a class="uk-button uk-button-default"
-                                           style="border-bottom: 3px solid deepskyblue">Đang vận chuyển</a>
-                                        <a class="uk-button uk-button-default"
-                                           style="border-bottom: 3px solid lawngreen">Giao thành công</a>
-                                        <a class="uk-button uk-button-default" style="border-bottom: 3px solid red">Huỷ
-                                            đơn</a>
-                                    </p>
+                                    <form th:action="@{/home/dashboard}" method="get">
+                                        <p uk-margin style="margin-left:60px;font-family:'Fira Code Light'">
+                                            <!--=======================================================================================================-->
+                                            <button th:style="${checked=='PENDING'?'background: darkorange;':''}"
+                                                    type="submit" name="status" value="PENDING"
+                                                    class="group relative inline-block overflow-hidden border border-orange-600 px-8 py-3 focus:outline-none focus:ring uk-button uk-button-default"><span
+                                                    class="absolute inset-x-0 bottom-0 h-[2px] bg-orange-600 transition-all group-hover:h-full group-active:bg-indigo-500"></span>
+                                                <span
+                                                        class="relative text-lg font-medium text-black-600 transition-colors group-hover:text-white">
+                                                        <strong
+                                                                style="font-family: Georgia, Times New Roman, serif">Đang
+                                                            Xác Nhận</strong></span></button>
+                                            <!--=======================================================================================================-->
+                                            <button th:style="${checked=='PACKING'?'background: purple;':''}"
+                                                    type="submit" name="status" value="PACKING"
+                                                    class="group relative inline-block overflow-hidden border border-purple-600 px-8 py-3 focus:outline-none focus:ring uk-button uk-button-default"><span
+                                                    class="absolute inset-x-0 bottom-0 h-[2px] bg-purple-600 transition-all group-hover:h-full group-active:bg-indigo-500"></span>
+                                                <span
+                                                        class="relative text-lg font-medium text-black-600 transition-colors group-hover:text-white">
+                                                        <strong
+                                                                style="font-family: Georgia, Times New Roman, serif">Đang
+                                                            Đóng Gói</strong></span></button>
+                                            <!--=======================================================================================================-->
+                                            <button th:style="${checked=='SHIPING'?'background: skyblue;':''}"
+                                                    type="submit" name="status" value="SHIPING"
+                                                    class="group relative inline-block overflow-hidden border border-sky-600 px-8 py-3 focus:outline-none focus:ring uk-button uk-button-default"><span
+                                                    class="absolute inset-x-0 bottom-0 h-[2px] bg-sky-600 transition-all group-hover:h-full group-active:bg-indigo-500"></span>
+                                                <span
+                                                        class="relative text-lg font-medium text-black-600 transition-colors group-hover:text-white">
+                                                        <strong
+                                                                style="font-family: Georgia, Times New Roman, serif">Đang
+                                                            Vận Chuyển</strong></span></button>
+                                            <!--=======================================================================================================-->
+                                            <button th:style="${checked=='SUCCESS'?'background: green;':''}"
+                                                    type="submit" name="status" value="SUCCESS"
+                                                    class="group relative inline-block overflow-hidden border border-green-600 px-8 py-3 focus:outline-none focus:ring uk-button uk-button-default"><span
+                                                    class="absolute inset-x-0 bottom-0 h-[2px] bg-green-600 transition-all group-hover:h-full group-active:bg-indigo-500"></span>
+                                                <span
+                                                        class="relative text-lg font-medium text-black-600 transition-colors group-hover:text-white">
+                                                        <strong
+                                                                style="font-family: Georgia, Times New Roman, serif">Giao
+                                                            Thành Công</strong></span></button>
+                                            <!--=======================================================================================================-->
+                                            <button th:style="${checked=='CANCEL'?'background: red;':''}" type="submit"
+                                                    name="status" value="CANCEL"
+                                                    class="group relative inline-block overflow-hidden border border-red-600 px-8 py-3 focus:outline-none focus:ring uk-button uk-button-default"><span
+                                                    class="absolute inset-x-0 bottom-0 h-[2px] bg-red-600 transition-all group-hover:h-full group-active:bg-indigo-500"></span>
+                                                <span
+                                                        class="relative text-lg font-medium text-black-600 transition-colors group-hover:text-white">
+                                                        <strong style="font-family: Georgia, Times New Roman, serif">Huỷ
+                                                            Đơn Hàng</strong></span></button>
+                                            <!--=======================================================================================================-->
+                                        </p>
+                                    </form>
+
                                     <hr class="uk-divider-icon">
-                                    <div class="table-responsive">
+                                    <center th:if="${donhangs.size()==0}">
+                                        <div role="alert"
+                                             style="height: 50px;width: 500px;text-align: center;font-size: 20px"
+                                             class="rounded border-l-4 border-red-500 bg-red-50 p-4">
+                                            <strong class="block font-large text-red-700"> Trống </strong>
+                                        </div>
+                                    </center>
+                                    <div class="table-responsive" th:if="${donhangs.size()>0}">
                                         <table class="data-table table-striped" id="my-orders-table">
                                             <colgroup>
                                                 <col width="18%">
@@ -83,55 +159,105 @@
                                                                   th:text="${#dates.format(donhang.getNgaymua(),'yyyy-MM-dd HH:mm:ss')}"/></strong>
                                                 </td>
                                                 <td><strong th:text="${donhang.accountByMatv.matv}"/></td>
-                                                <td><!--<span class="price"
-                                                          th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')}"/>--><span
-                                                        class="inline-flex items-center justify-center rounded-full bg-purple-200 px-2.5 py-0.5 text-red-700"
-                                                >
-  <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="-ml-1 mr-1.5 h-4 w-4"
-  >
-    <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-    />
-  </svg>
+                                                <td>
+                                                    <!--<span class="price"
+                                                  th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')}"/>--><span
+                                                        class="inline-flex items-center justify-center rounded-full bg-purple-200 px-2.5 py-0.5 text-red-700">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                     viewBox="0 0 24 24" stroke-width="1.5"
+                                                                     stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                          d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                                </svg>
 
-  <p class="whitespace-nowrap text-sm"><span class="price"
-                                             th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')+' VNĐ'}"/></p>
-</span>
+                                                                <p class="whitespace-nowrap text-sm"><span class="price"
+                                                                                                           th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')+' VNĐ'}"/>
+                                                                </p>
+                                                            </span>
 
                                                 </td>
-                                                <td><span
-                                                        class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
-                                                        <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                stroke-width="1.5"
-                                                                stroke="currentColor"
-                                                                class="-ml-1 mr-1.5 h-4 w-4"><path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
-                                                        </svg>
-  <p class="whitespace-nowrap text-lg">Đang Chờ Xác Nhận</p>
-</span></td>
-                                                <td class="a-center last"><span class="nobr"> <a
-                                                        th:href="@{/home/hoadon}">Xem đơn đặt hàng</a><span
-                                                        class="separator"> | </span><a th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}" class="btn">Yay!</a><!--<label for="my-modal" style="max-width: 50px;background: #3e6274" class="btn">Huỷ Đơn</label>--></span>
-                                                    <input type="checkbox" id="my-modal" class="modal-toggle"/>
+                                                <td>
+                                                    <!--=====================================================================-->
+                                                    <span th:if="${checked=='PENDING'}"  class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                       <path stroke-linecap="round" stroke-linejoin="round"
+                                                             d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                                                       </svg>
+                                                       <p class="whitespace-nowrap text-lg">Đang Chờ Xác Nhận</p>
+                                                    </span>
+                                                    <!--=====================================================================-->
+                                                    <!--=====================================================================-->
+                                                    <span th:if="${checked=='PACKING'}" class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                       <path stroke-linecap="round" stroke-linejoin="round"
+                                                             d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                                                       </svg>
+                                                       <p class="whitespace-nowrap text-lg">Đang Chờ Đóng Gói</p>
+                                                    </span>
+                                                    <!--=====================================================================--><!--=====================================================================-->
+                                                    <span th:if="${checked=='SHIPING'}" class="inline-flex items-center justify-center rounded-full bg-blue-200 px-2.5 py-0.5 text-blue-700">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                       <path stroke-linecap="round" stroke-linejoin="round"
+                                                             d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                                                       </svg>
+                                                       <p class="whitespace-nowrap text-lg">Đang Vận Chuyển</p>
+                                                    </span>
+                                                    <!--=====================================================================--><!--=====================================================================-->
+                                                    <span th:if="${checked=='SUCCESS'}" class="inline-flex items-center justify-center rounded-full bg-green-200 px-2.5 py-0.5 text-green-700">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                       <path stroke-linecap="round" stroke-linejoin="round"
+                                                             d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                                                       </svg>
+                                                       <p class="whitespace-nowrap text-lg">Giao Thành Công</p>
+                                                    </span>
+                                                    <!--=====================================================================--><!--=====================================================================-->
+                                                    <span th:if="${checked=='CANCEL'}" class="inline-flex items-center justify-center rounded-full bg-red-200 px-2.5 py-0.5 text-red-700">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
+                                                       <path stroke-linecap="round" stroke-linejoin="round"
+                                                             d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                                                       </svg>
+                                                       <p class="whitespace-nowrap text-lg">Huỷ Đơn Hàng</p>
+                                                    </span>
+                                                    <!--=====================================================================-->
+                                                </td>
+                                                <td class="a-center last"><span class="nobr"> <!--<a
+                                                                    th:href="@{'/home/hoadon?idhd='+${donhang.getMahd()}}">Xem
+                                                                    đơn đặt hàng</a><span class="separator"> | </span><a
+                                                                    th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}"
+                                                                    class="btn">Yay!</a>-->
+                                                                <label th:if="${checked=='PENDING'}"
+                                                                       th:for="${donhang.getMahd()}"
+                                                                       style="max-width: 50px;background: #3e6274"
+                                                                       class="btn">Huỷ Đơn</label>
+                                                                <label th:if="${checked=='CANCEL'}"
+                                                                       th:for="${donhang.getMahd()}"
+                                                                       style="max-width: 50px;background: #3e6274"
+                                                                       class="btn">Mua Lại</label>
+                                                            </span>
+                                                    <input type="checkbox" th:id="${donhang.getMahd()}"
+                                                           class="modal-toggle"/>
                                                     <div class="modal">
                                                         <div class="modal-box">
-                                                            <h3 class="font-bold text-lg">Bạn Muốn Huỷ Đơn Hàng !!!</h3>
+                                                            <h3 th:if="${checked=='PENDING'}" class="font-bold text-lg">
+                                                                Bạn Muốn Huỷ Đơn Hàng !!!</h3>
+                                                            <h3 th:if="${checked=='CANCEL'}" class="font-bold text-lg">
+                                                                Bạn Muốn Mua Lại Đơn Hàng !!!</h3>
                                                             <div class="modal-action">
-                                                                <label for="my-modal" class="btn">Cancel!</label>
-                                                                <a th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}" class="btn">Yay!</a>
+                                                                <label th:for="${donhang.getMahd()}"
+                                                                       class="btn">Cancel!</label>
+                                                                <a th:href="@{'/home/'+${checked}+'?idhd='+${donhang.getMahd()}}"
+                                                                   class="btn">Yay!</a>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -146,7 +272,23 @@
                                 <!--recent-orders-->
 
                             </div>
+                            <div class=" button-1 text-right" style="padding: 20px">
+                                <a th:href="@{/home/listphukien}"
+                                   class="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                                   href="/download">
+                                        <span
+                                                class="absolute inset-y-0 right-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+
+                                    <span
+                                            class="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
+                                            <strong
+                                                    style="font-size: 15px;font-family: 'Gill Sans Ultra Bold Condensed'">TIẾP
+                                                TỤC MUA SẮM</strong>
+                                        </span>
+                                </a>
+                            </div>
                         </div>
+
                     </section>
                     <!--col-main col-sm-9 wow bounceInUp animated-->
                     <div th:replace="site/layouts/category::category">
@@ -193,7 +335,8 @@
                         <ul class="level1">
                             <li class="level2 nav-6-1-1"><a href="grid.html"><span>Amplifiers</span></a></li>
                             <!--level2 nav-6-1-1-->
-                            <li class="level2 nav-6-1-1"><a href="grid.html"><span>Installation Parts</span></a></li>
+                            <li class="level2 nav-6-1-1"><a href="grid.html"><span>Installation Parts</span></a>
+                            </li>
                             <!--level2 nav-6-1-1-->
                             <li class="level2 nav-6-1-1"><a href="grid.html"><span>Speakers</span></a></li>
                             <!--level2 nav-6-1-1-->
@@ -281,7 +424,8 @@
                     <li class="level3 nav-6-1 parent item"><a href="grid.html"><span>Performance</span></a>
                         <!--sub sub category-->
                         <ul class="level1">
-                            <li class="level2 nav-6-1-1"><a href="grid.html"><span>Air Intake Systems</span></a></li>
+                            <li class="level2 nav-6-1-1"><a href="grid.html"><span>Air Intake Systems</span></a>
+                            </li>
                             <!--level2 nav-6-1-1-->
                             <li class="level2 nav-6-1-1"><a href="grid.html"><span>Brakes</span></a></li>
                             <!--level2 nav-6-1-1-->
@@ -306,8 +450,8 @@
                     <li class="level1 nav-10-3"><a href="grid1.html"> <span>Accessories Grid</span> </a></li>
                     <li class="level1 nav-10-4"><a href="list1.html"> <span>Accessories List</span> </a></li>
                     <li class="level1 first parent"><a href="car-detail.html"><span>Car Detail</span></a></li>
-                    <li class="level1 first parent"><a
-                            href="accessories-detail.html"><span>Accessories Detail</span></a></li>
+                    <li class="level1 first parent"><a href="accessories-detail.html"><span>Accessories
+                                    Detail</span></a></li>
                 </ul>
             </li>
             <li><a href="grid.html">Blog</a>
@@ -324,10 +468,11 @@
                     <li class="level1 first parent"><a href="checkout.html"><span>Checkout</span></a>
                         <!--sub sub category-->
                         <ul class="level2 right-sub">
-                            <li class="level2 nav-2-1-1 first"><a href="checkout-method.html"><span>Method</span></a>
+                            <li class="level2 nav-2-1-1 first"><a
+                                    href="checkout-method.html"><span>Method</span></a>
                             </li>
-                            <li class="level2 nav-2-1-5 last"><a
-                                    href="checkout-billing-info.html"><span>Billing Info</span></a></li>
+                            <li class="level2 nav-2-1-5 last"><a href="checkout-billing-info.html"><span>Billing
+                                            Info</span></a></li>
                         </ul>
                         <!--sub sub category-->
                     </li>

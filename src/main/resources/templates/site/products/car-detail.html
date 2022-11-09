@@ -20,7 +20,10 @@
                 HideMe1();
                 re();
                 resetCheck()
-                UIkit.notification({message: '<strong style="color: black;font-size: 15px">Đặt Lịch Thành Công</strong>', status: 'success'});
+                UIkit.notification({
+                    message: '<strong style="color: black;font-size: 15px">Đặt Lịch Thành Công</strong>',
+                    status: 'success'
+                });
             }
             function _error(res) {
                 var data = res.data;
@@ -29,33 +32,51 @@
                 var config = res.config;
                 alert("Error: " + status + ":" + data);
             }
-            $scope.khunggio=null;
-/*            $scope.changekhunggio = function (){
-                console.log($scope.khunggio);
-                console.log($scope.ngay)
-            }*/
-            $scope.min = new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate();
-            $scope.ngay = new Date();
 
-            $scope.xacnhan = function (){
-                if (confirm("Bạn có muốn đặt lịch xem xe không!")==true){
+            $scope.khunggio = null;
+            /*            $scope.changekhunggio = function (){
+                            console.log($scope.khunggio);
+                            console.log($scope.ngay)
+                        }*/
+            /*$scope.min = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();*/
+            if(new Date().getDate()>=10){
+                if((new Date().getMonth() + 1)>=10){
+                    $scope.min = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
+                }else{
+                    $scope.min = new Date().getFullYear() + "-0" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
+                }
+            }else{
+                if((new Date().getMonth() + 1)>=10){
+                    $scope.min = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-0" + new Date().getDate()
+                }else{
+                    $scope.min = new Date().getFullYear() + "-0" + (new Date().getMonth() + 1) + "-0" + new Date().getDate()
+                }
+            }
+            $scope.ngay = new Date();
+            document.getElementById("booklich").min=$scope.min
+            if($scope.min == $scope.min){
+                console.log("Chuẩn mẹ rồi");
+            }
+            $scope.xacnhan = function () {
+                if (confirm("Bạn có muốn đặt lịch xem xe không!") == true) {
                     $http({
                         method: "GET",
-                        url: "/Appointment/Add?ngayhen="+$scope.ngay.toDateString()+"&khunggio="+$scope.khunggio,
+                        url: "/Appointment/Add?ngayhen=" + $scope.ngay.toDateString() + "&khunggio=" + $scope.khunggio,
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     }).then(_success, _error);
                 }
             }
+
             function resetCheck() {
-                for(i=1;i<=8;++i){
-                    document.getElementById('gio'+i).checked = false;
-                    document.getElementById('gio'+i).removeAttribute("disabled");
+                for (i = 1; i <= 8; ++i) {
+                    document.getElementById('gio' + i).checked = false;
+                    document.getElementById('gio' + i).removeAttribute("disabled");
                 }
             }
 
-            function re(){
+            function re() {
                 $http.get("/Appointment?ngay=" + $scope.ngay.toDateString()).then(function (response) {
                     $scope.appointment = response.data;
                     angular.forEach($scope.appointment, function (item, key) {
@@ -96,11 +117,13 @@
                     });
                 })
             }
+
             re()
             $scope.Valuechage = function change() {
                 resetCheck();
                 re();
             }
+
             function reload() {
                 $http.get('/Appointment').then(response => {
                     $scope.appointment = response.data;
@@ -170,12 +193,16 @@
                                             </div>
                                         </div>
                                         <!-- end: more-images -->
-                                        <div class="toll-free"><a href="#" sec:authorize="!isAuthenticated()"><i class="fa fa-phone"></i> 0705******</a>
+                                        <div class="toll-free"><a href="#" sec:authorize="!isAuthenticated()"><i
+                                                class="fa fa-phone"></i> 0705******</a>
                                         </div>
-                                        <div class="toll-free"><a href="#" sec:authorize="isAuthenticated()"><i class="fa fa-phone"></i>0705182415</a>
+                                        <div class="toll-free"><a href="#" sec:authorize="isAuthenticated()"><i
+                                                class="fa fa-phone"></i>0705182415</a>
                                         </div>
-                                        <div class="ask-question"><a href="#" onClick="ShowMe();" sec:authorize="isAuthenticated()"><i
-                                                class="fa fa-question" ng-click="Valuechage()"></i>Đặt lịch xem xe</a></div>
+                                        <div class="ask-question"><a href="#" onClick="ShowMe();"
+                                                                     sec:authorize="isAuthenticated()"><i
+                                                class="fa fa-question" ng-click="Valuechage()"></i>Đặt lịch xem xe</a>
+                                        </div>
                                         <!--<div class="request-call"><a href="#" onClick="ShowMe1();"><i
                                                 class="fa fa-money"></i> Finance Calculator</a></div>-->
                                     </div>
@@ -1145,14 +1172,14 @@
         </ul>
     </div>
 
-    <div class="popup2" style="display: none;" >
+    <div class="popup2" style="display: none;">
         <div class="ask-question-block">
             <h3>Đặt lịch xem xe</h3>
             <div class="form-inner"><img th:src="@{/images/close-icon.png}" alt="close" class="x" onClick="HideMe1();">
                 <div class="box">
                     <div class="box1">
                         <div class="form-block"><label>Mã khách hàng</label>
-                            <strong name="" sec:authentication="name" />
+                            <strong name="" sec:authentication="name"/>
                         </div>
                         <div class="form-block"><label>Email</label>
                             <input name="" type="text">
@@ -1172,7 +1199,7 @@
                         <div class="form-block "><label>Ngày/ Tháng/ Năms
                             <main></main>
                         </label>
-                            <input class="date1" ng-model="ngay" name="" id="booklich" type="date" min="{{min}}"
+                            <input class="date1" ng-model="ngay" name="" id="booklich" type="date"
                                    ng-change="Valuechage()">
                         </div>
                         <!--<div class="form-block"><label>Địa chỉ</label>
@@ -1183,30 +1210,38 @@
                                 <div class="time-s">
                                     <label class="time1">
                                         <!--<input type="radio" id="gio1" name="gio"> 08-09 Am-->
-                                        <input type="radio" ng-model="khunggio" value="08h-09h" ng-change="changekhunggio()" id="gio1" name="gio"> 08-09 Am
+                                        <input type="radio" ng-model="khunggio" value="08h-09h"
+                                               ng-change="changekhunggio()" id="gio1" name="gio"> 08-09 Am
                                     </label>
                                     <label class="time1" th:for="gio2">
-                                        <input type="radio" ng-model="khunggio" value="09h-10h" ng-change="changekhunggio()" id="gio2" name="gio"> 09-10 Am
+                                        <input type="radio" ng-model="khunggio" value="09h-10h"
+                                               ng-change="changekhunggio()" id="gio2" name="gio"> 09-10 Am
                                     </label>
                                     <label class="time1" th:for="gio3">
-                                        <input type="radio" ng-model="khunggio" value="10h-11h" ng-change="changekhunggio()" id="gio3" name="gio"> 10-11 Am
+                                        <input type="radio" ng-model="khunggio" value="10h-11h"
+                                               ng-change="changekhunggio()" id="gio3" name="gio"> 10-11 Am
                                     </label>
                                     <label class="time1" th:for="gio4">
-                                        <input type="radio" ng-model="khunggio" value="11h-12h" ng-change="changekhunggio()" id="gio4" name="gio"> 11-12 Am
+                                        <input type="radio" ng-model="khunggio" value="11h-12h"
+                                               ng-change="changekhunggio()" id="gio4" name="gio"> 11-12 Am
                                     </label>
                                 </div>
                                 <div class="time-c">
                                     <label class="time1" th:for="gio5">
-                                        <input type="radio" ng-model="khunggio" value="13h-14h" ng-change="changekhunggio()" id="gio5" name="gio"> 13-14 Pm
+                                        <input type="radio" ng-model="khunggio" value="13h-14h"
+                                               ng-change="changekhunggio()" id="gio5" name="gio"> 13-14 Pm
                                     </label>
                                     <label class="time1" th:for="gio6">
-                                        <input type="radio" ng-model="khunggio" value="14h-15h" ng-change="changekhunggio()" id="gio6" name="gio"> 14-15 Pm
+                                        <input type="radio" ng-model="khunggio" value="14h-15h"
+                                               ng-change="changekhunggio()" id="gio6" name="gio"> 14-15 Pm
                                     </label>
                                     <label class="time1" th:for="gio7">
-                                        <input type="radio" ng-model="khunggio" value="15h-16h" ng-change="changekhunggio()" id="gio7" name="gio"> 15-16 Pm
+                                        <input type="radio" ng-model="khunggio" value="15h-16h"
+                                               ng-change="changekhunggio()" id="gio7" name="gio"> 15-16 Pm
                                     </label>
                                     <label class="time1" th:for="gio8">
-                                        <input type="radio" ng-model="khunggio" value="16h-17h" ng-change="changekhunggio()" id="gio8" name="gio"> 16-17 Pm
+                                        <input type="radio" ng-model="khunggio" value="16h-17h"
+                                               ng-change="changekhunggio()" id="gio8" name="gio"> 16-17 Pm
                                     </label>
                                 </div>
                             </div>
@@ -1260,7 +1295,8 @@
                     </style>
                 </div>
                 <div class="form-block">
-                    <button ng-click="xacnhan()" type="submit" title="submit" class="button"><span>Xác nhận</span></button>
+                    <button ng-click="xacnhan()" type="submit" title="submit" class="button"><span>Xác nhận</span>
+                    </button>
                 </div>
             </div>
         </div>

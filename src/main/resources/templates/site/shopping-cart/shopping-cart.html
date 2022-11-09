@@ -15,6 +15,9 @@
             function _success(res) {
                 reload();
             }
+            $scope.input = function (){
+                reload();
+            }
             function _error(res) {
                 var data = res.data;
                 var status = res.status;
@@ -31,6 +34,7 @@
                         ++$scope.totalItem;
                         $scope.total += (item.soluong * item.accessoriesByMalk.gia);
                     });
+                    $scope.totalbill = parseInt($scope.total)+parseInt($scope.ship)
                     console.log($scope.mycart.length)
                 })
             }
@@ -598,9 +602,14 @@
                             <div class="discount">
                                 <h3>2.Thanh toán và vận chuyển</h3>
                                 <div class="form-group ">
-                                    <select class="form-control ng-pristine ng-valid ng-touched">
-                                        <option value="number:1" label="Giao hàng tận nơi - 40,000" selected="selected">
-                                            Giao hàng tận nơi - 40,000</option></select>
+                                    <select ng-model="ship" ng-change="input()" class="form-control ng-pristine ng-valid ng-touched">
+                                        <option value="40000" label="Giao hàng tận nơi - 40,000" selected>
+                                            Giao hàng tận nơi - 40,000</option>
+                                        <option value="27000" label="Giao hàng Tiết Kiệm - 27,000">
+                                            Giao hàng Tiết Kiệm - 27,000</option>
+                                        <option value="25000" label="Giao hàng Tiêu Chuẩn - 25,000">
+                                            Giao hàng Tiêu Chuẩn - 25,000</option>
+                                    </select>
                                 </div>
                                 <h2 class="title">Thanh toán</h2>
                                 <div class="radio ng-scope">
@@ -637,93 +646,26 @@
                             <div class="totals">
                                 <h3>3.Thông tin đơn hàng</h3>
                                 <div class="inner">
-                                    <ul class="header__cart-list-item">
+                                    <ul class="header__cart-list-item" style="max-height: 300px">
                                         <!-- Cart item -->
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
+                                        <li class="header__cart-item" ng-repeat="cart in mycart">
+                                            <!--<img th:src="@{/products-images/p1.jpg}"
+                                                 alt="" class="header__cart-img">-->
                                             <div class="header__cart-item-info">
                                                 <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
+                                                    <h5 class="header__cart-item-name">{{cart.accessoriesByMalk.ten}}</h5>
                                                     <div class="header__cart-item-price-wrap">
                                                         <span
-                                                                class="header__cart-item-price">$49000.00</span>
+                                                                class="header__cart-item-price">{{cart.accessoriesByMalk.gia}}</span>
                                                         <span
                                                                 class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
+                                                        <span class="header__cart-item-qnt">{{cart.soluong}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="header__cart-item-body">
                                                     <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
+                                                        Phân loại: Linh Kiện
                                                     </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span
-                                                                class="header__cart-item-price">$49000.00</span>
-                                                        <span
-                                                                class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span
-                                                                class="header__cart-item-price">$49000.00</span>
-                                                        <span
-                                                                class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="header__cart-item">
-                                            <img th:src="@{/products-images/p1.jpg}"
-                                                 alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">Gorgeous Mercedes-Benz E-Class All-Terrain Luxury</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span
-                                                                class="header__cart-item-price">$49000.00</span>
-                                                        <span
-                                                                class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại: Ô tô
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -879,17 +821,17 @@
                                                 <strong>TỔNG HOÁ ĐƠN: </strong>
                                             </td>
                                             <td style="" class="a-right">
-                                                <strong><span class="price">$129.00</span></strong>
+                                                <strong><span class="price">{{totalbill| currency:'':0}} VNĐ</span></strong>
                                             </td>
                                         </tr>
                                         </tfoot>
                                         <tbody>
                                         <tr>
                                             <td style="" class="a-left" colspan="1">
-                                                Thành tiền
+                                                Phí vận chuyển
                                             </td>
                                             <td style="" class="a-right">
-                                                <span class="price">$129.00</span>
+                                                <span class="price">{{ship| currency:'':0}} VNĐ</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -912,7 +854,7 @@
                                                     <p class="py-6">Vui lòng xác nhận lại đơn hàng !</p>
                                                     <div class="modal-action">
                                                         <label for="my-modal" class="btn" style="font-size: 13px">Huỷ!</label>
-                                                        <a th:href="@{/home/Payorder}"><label class="btn" style="font-size: 13px">Chốt Đơn!</label></a>
+                                                        <a th:href="@{/home/Payorder?total={{totalbill}}}"><label class="btn" style="font-size: 13px">Chốt Đơn!</label></a>
                                                     </div>
                                                 </div>
                                             </div>
