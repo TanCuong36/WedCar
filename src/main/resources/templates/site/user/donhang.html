@@ -134,20 +134,21 @@
                                     </center>
                                     <div class="table-responsive" th:if="${donhangs.size()>0}">
                                         <table class="data-table table-striped" id="my-orders-table">
-                                            <colgroup>
+                                            <!--<colgroup>
                                                 <col width="18%">
                                                 <col width="12%">
-                                                <col width="10%">
+                                                <col width="30%">
                                                 <col width="25%">
                                                 <col width="15%">
                                                 <col width="10%">
-                                            </colgroup>
+                                            </colgroup>-->
                                             <thead>
                                             <tr class="first last">
                                                 <th>Đơn hàng #</th>
                                                 <th>Ngày mua</th>
-                                                <th>Gửi đến</th>
-                                                <th><span class="nobr">Tổng đơn hàng</span></th>
+                                                <th th:if="${checked=='PENDING'}">Gửi đến</th>
+                                                <th width="20%" th:if="${checked!='PENDING'}">Ngày Xác Nhận</th>
+                                                <th>Tổng đơn hàng</th>
                                                 <th>Trạng thái</th>
                                                 <th>&nbsp;</th>
                                             </tr>
@@ -158,7 +159,8 @@
                                                 <td><strong><span class="nobr"
                                                                   th:text="${#dates.format(donhang.getNgaymua(),'yyyy-MM-dd HH:mm:ss')}"/></strong>
                                                 </td>
-                                                <td><strong th:text="${donhang.accountByMatv.matv}"/></td>
+                                                <td th:if="${checked=='PENDING'}"><strong th:text="${donhang.accountByMatv.matv}"/></td>
+                                                <td th:if="${checked!='PENDING'}"><strong th:text="${donhang.ngaynhan}"/></td>
                                                 <td>
                                                     <!--<span class="price"
                                                   th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')}"/>--><span
@@ -230,11 +232,9 @@
                                                     </span>
                                                     <!--=====================================================================-->
                                                 </td>
-                                                <td class="a-center last"><span class="nobr"> <!--<a
+                                                <td class="a-center last"><span class="nobr"> <a
                                                                     th:href="@{'/home/hoadon?idhd='+${donhang.getMahd()}}">Xem
-                                                                    đơn đặt hàng</a><span class="separator"> | </span><a
-                                                                    th:href="@{'/home/pending?idhd='+${donhang.getMahd()}}"
-                                                                    class="btn">Yay!</a>-->
+                                                                    đơn đặt hàng</a><span class="separator"> | </span>
                                                                 <label th:if="${checked=='PENDING'}"
                                                                        th:for="${donhang.getMahd()}"
                                                                        style="max-width: 50px;background: #3e6274"

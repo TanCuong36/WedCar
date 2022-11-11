@@ -15,4 +15,5 @@ public interface BillaccessoriesRepository extends JpaRepository<Billaccessories
 
     void deleteAllByMahd(String id);
     List<Billaccessories> findAllByTrangthaiAndAccountByMatv_MatvOrderByMahdDesc(String status,String matv);
+    List<Billaccessories> findAllByTrangthaiOrderByNgaymuaDesc(String trangthai);
 }
