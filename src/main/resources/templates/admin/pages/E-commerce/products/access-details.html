@@ -38,9 +38,9 @@
     </div>
 
 
-    <main id="content" role="main" class="main">
+    <main id="content" role="main" class="main" th:object="${item12}" style="padding-top: 50px;">
       <!-- Content -->
-      <div class="content container-fluid">
+      <div class="content container-fluid" >
         <!-- Page Header -->
         <div class="page-header">
           <div class="row align-items-center">
@@ -52,7 +52,7 @@
                 </ol>
               </nav>
 
-              <h1 class="page-header-title">Thêm linh kiện</h1>
+              <h1 class="page-header-title">Thông tin sản phẩm</h1>
             </div>
           </div>
           <!-- End Row -->
@@ -75,7 +75,7 @@
                 <div class="form-group">
                   <label for="productNameLabel" class="input-label">Tên linh kiện <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Products are the goods or services you sell."></i></label>
 
-                  <input type="text" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="" th:field="*{ten}">
                 </div>
                 <!-- End Form Group -->
 
