@@ -36,11 +36,11 @@ public class AdminController {
     @Autowired
     BillaccessoriesdetailRepository billaccessoriesdetailRepository;
 
-    /*@GetMapping("/Admin")
-    public String admin(Model model){
-        model.addAttribute("donhangs", billaccessoriesRepository.findAllByTrangthaiOrderByNgaymuaDesc("PENDING"));
-        return "admin/layouts/index";
-    }*/
+//    @GetMapping("/Admin")
+//    public String admin(Model model){
+//        model.addAttribute("donhangs", billaccessoriesRepository.findAllByTrangthaiOrderByNgaymuaDesc("PENDING"));
+//        return "admin/layouts/index";
+//    }
 
     private int[] totalbll(){
         int[] total = new int[4];
@@ -83,53 +83,53 @@ public class AdminController {
     }
 
 
-    @GetMapping("Admin/orders-accessories-detail")
-    public String orders_detail(Model model,@RequestParam("madh")String madh) {
-        model.addAttribute("bill",billaccessoriesRepository.findAllByMahd(madh));
-        return "admin/pages/E-commerce/orders/orders-accessories-details";
-    }
+//    @GetMapping("Admin/orders-accessories-detail")
+//    public String orders_detail(Model model,@RequestParam("madh")String madh) {
+//        model.addAttribute("bill",billaccessoriesRepository.findAllByMahd(madh));
+//        return "admin/pages/E-commerce/orders/orders-accessories-details";
+//    }
 
     // Product
-    @RequestMapping("admin/product-car")
-    public String product_car(Model model) {
-        return "admin/pages/E-commerce/products/product-car";
-    }
-
-    @RequestMapping("admin/product-phukien")
-    public String product_phukien(Model model) {
-        return "admin/pages/E-commerce/products/product-phukien";
-    }
-
-    @RequestMapping("admin/car-detail")
-    public String car_detail(Model model) {
-        return "admin/pages/E-commerce/products/car-details";
-    }
-
-    @RequestMapping("admin/access-detail")
-    public String access_detail(Model model) {
-        return "admin/pages/E-commerce/products/access-details";
-    }
-
-    @RequestMapping("admin/add-car")
-    public String car_add(Model model) {
-        return "admin/pages/E-commerce/products/add-car";
-    }
-
-    @RequestMapping("admin/add-access")
-    public String access_add(Model model) {
-        return "admin/pages/E-commerce/products/add-access";
-    }
+//    @RequestMapping("admin/product-car")
+//    public String product_car(Model model) {
+//        return "admin/pages/E-commerce/products/product-car";
+//    }
+//
+//    @RequestMapping("admin/product-phukien")
+//    public String product_phukien(Model model) {
+//        return "admin/pages/E-commerce/products/product-phukien";
+//    }
+//
+//    @RequestMapping("admin/car-detail")
+//    public String car_detail(Model model) {
+//        return "admin/pages/E-commerce/products/car-details";
+//    }
+//
+//    @RequestMapping("admin/access-detail")
+//    public String access_detail(Model model) {
+//        return "admin/pages/E-commerce/products/access-details";
+//    }
+//
+//    @RequestMapping("admin/add-car")
+//    public String car_add(Model model) {
+//        return "admin/pages/E-commerce/products/add-car";
+//    }
+//
+//    @RequestMapping("admin/add-access")
+//    public String access_add(Model model) {
+//        return "admin/pages/E-commerce/products/add-access";
+//    }
 
     // Oders
-    @RequestMapping("admin/orders-car")
-    public String orders_car(Model model) {
-        return "admin/pages/E-commerce/orders/orders-car";
-    }
-
-    @RequestMapping("admin/orders-accessories")
-    public String orders_access(Model model) {
-        return "admin/pages/E-commerce/orders/orders-accessories";
-    }
+//    @RequestMapping("admin/orders-car")
+//    public String orders_car(Model model) {
+//        return "admin/pages/E-commerce/orders/orders-car";
+//    }
+//
+//    @RequestMapping("admin/orders-accessories")
+//    public String orders_access(Model model) {
+//        return "admin/pages/E-commerce/orders/orders-accessories";
+//    }
 
     // users
     @RequestMapping("admin/users-add")
