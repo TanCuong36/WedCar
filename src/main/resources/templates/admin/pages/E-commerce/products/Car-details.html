@@ -38,9 +38,9 @@
     </div>
 
 
-    <main id="content" role="main" class="main">
+    <main id="content" role="main" class="main" th:object="${item}" style="padding-top: 40px;">
       <!-- Content -->
-      <div class="content container-fluid">
+      <div class="content container-fluid" >
         <!-- Page Header -->
         <div class="page-header">
           <div class="row align-items-center">
@@ -59,7 +59,7 @@
         </div>
         <!-- End Page Header -->
   
-        <div class="row">
+        <div class="row" >
           <div class="col-lg-8">
             <!-- Card -->
             <div class="card mb-3 mb-lg-5">
@@ -70,12 +70,12 @@
               <!-- End Header -->
 
               <!-- Body -->
-              <div class="card-body">
+              <div class="card-body" >
                 <!-- Form Group -->
                 <div class="form-group">
                   <label for="productNameLabel" class="input-label">Tên <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Products are the goods or services you sell."></i></label>
 
-                  <input type="text" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="productName" id="productNameLabel" placeholder="" aria-label="" th:field="*{tencar}">
                 </div>
                 <!-- End Form Group -->
 
@@ -94,7 +94,7 @@
                   <div class="form-group">
                     <label for="datelable" class="input-label">Năm sản xuất</label>
 
-                    <input type="date" class="form-control" name="date" id="date" placeholder="30/12/1998" aria-label="30/12/1998">
+                    <input type="text" class="form-control" th:field="*{namsx}">
                   </div>
                   <!-- End Form Group -->
                   </div>
@@ -103,74 +103,27 @@
                       <label for="collectionsLabel" class="input-label">Hãng xe</label>
     
                       <!-- Select -->
-                      <select class="js-select2-custom custom-select" size="1" style="opacity: 0;" id="collectionsLabel" data-hs-select2-options='{
-                                "minimumResultsForSearch": "Infinity",
-                                "placeholder": ""
-                              }'>
-                        <option label="empty"></option>
-                        <option value="Winter">Winter</option>
-                        <option value="Spring">Spring</option>
-                        <option value="Summer">Summer</option>
-                        <option value="Autumn">Autumn</option>
-                      </select>
+                      <select class="form-control" name="tenhang" id="tenhang"
+                   		>
+                      <option>
+                      </option>
+                      
+                    </select>
                       <!-- End Select -->
     
                      
                     </div>
+                       
                     </div>
-                  <div class="col-sm-6">
-                    <!-- Form Group -->
-                    <div class="form-group">
-                      <label for="weightLabel" class="input-label">Trọng lượng</label>
-      
-                      <div class="input-group input-group-merge">
-                        <input type="text" class="form-control" name="weightName" id="weightLabel" placeholder="0.0" aria-label="0.0">
-                        <div class="input-group-append">
-                          <!-- Select -->
-                          <div id="weightSelect" class="select2-custom select2-custom-right">
-                            <select class="js-select2-custom custom-select" size="1" style="opacity: 0;" data-hs-select2-options='{
-                                      "dropdownParent": "#weightSelect",
-                                      "dropdownAutoWidth": true,
-                                      "width": true
-                                    }'>
-                              <option value="lb">lb</option>
-                              <option value="oz">oz</option>
-                              <option value="kg" selected="">kg</option>
-                              <option value="g">g</option>
-                            </select>
-                          </div>
-                          <!-- End Select -->
-                        </div>
-                      </div>
-                     
-                    </div>
-                    <!-- End Form Group -->
-                  </div>
-                  <div class="col-sm-6">
-                       <div class="form-group">
-                       <label for="categoryLabel" class="input-label">Loại xe</label>
-  
-                         <!-- Select -->
-                        <select class="js-select2-custom custom-select" size="1" style="opacity: 0;" id="categoryLabel" data-hs-select2-options='{
-                                 "minimumResultsForSearch": "Infinity",
-                              "placeholder": ""
-                            }'>
-                            <option label="empty"></option>
-                             <option value="Clothing">Clothing</option>
-                            <option value="Shoes">Shoes</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Others">Others</option>
-                    </select>
-                    <!-- End Select -->
-                        </div>
-                  </div>
+                 
+                 
                   
                   
                 </div>
                 <!-- End Row -->
                 
                 <label class="input-label">Ghi chú </label>
-                <input class="form-control" type="text" name="">
+                <input class="form-control" type="text" name="" >
                 <!-- Quill -->
                 <div class="quill-custom">
                   <div class="js-quill" style="min-height: 15rem;" data-hs-quill-options='{
@@ -218,11 +171,11 @@
                 <!-- Gallery -->
                 <div id="fancyboxGallery" class="js-fancybox row justify-content-sm-center gx-2" data-hs-fancybox-options='{
                        "selector": "#fancyboxGallery .js-fancybox-item"
-                     }'>
+                     }'   >
                   <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
                     <!-- Card -->
                     <div class="card card-sm">
-                      <img class="card-img-top" th:src="@{\assets\img\400x400\img7.jpg}" alt="Image Description">
+                      <img class="card-img-top" th:src="@{*{image}}" alt="Image Description">
 
                       <div class="card-body">
                         <div class="row text-center">
@@ -247,7 +200,7 @@
                   <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
                     <!-- Card -->
                     <div class="card card-sm">
-                      <img class="card-img-top" th:src="@{\assets\img\400x400\img8.jpg}" alt="Image Description">
+                      <img class="card-img-top"th:src="@{*{image}}" alt="Image Description">
 
                       <div class="card-body">
                         <div class="row text-center">
@@ -272,7 +225,7 @@
                   <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
                     <!-- Card -->
                     <div class="card card-sm">
-                      <img class="card-img-top" th:src="@{\assets\img\400x400\img9.jpg}" alt="Image Description">
+                      <img class="card-img-top" th:src="@{*{image}}" alt="Image Description">
 
                       <div class="card-body">
                         <div class="row text-center">
@@ -297,7 +250,7 @@
                   <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
                     <!-- Card -->
                     <div class="card card-sm">
-                      <img class="card-img-top" th:src="@{\assets\img\400x400\img10.jpg}" alt="Image Description">
+                      <img class="card-img-top" th:src="@{*{image}}" alt="Image Description">
 
                       <div class="card-body">
                         <div class="row text-center">
@@ -376,8 +329,9 @@
                                   "minimumResultsForSearch": "Infinity",
                                   "placeholder": "Separate options with enter",
                                   "tags": true
-                                }'>
-                          <option label="empty"></option>
+                                }'   >
+                          <option label="empty" 
+                         ></option>
                         </select>
                         <!-- End Select2 -->
                       </div>
@@ -452,7 +406,7 @@
                   <label for="priceNameLabel" class="input-label">Price</label>
   
                   <div class="input-group">
-                    <input type="text" class="form-control" name="priceName" id="priceNameLabel" placeholder="0.00" aria-label="0.00">
+                    <input type="text" class="form-control" name="priceName" id="priceNameLabel" placeholder="0.00" aria-label="0.00" th:field="*{gia}">
 
                     <div class="input-group-append">
                       <!-- Select -->
@@ -462,7 +416,7 @@
                                     "dropdownAutoWidth": true,
                                     "width": true
                                   }'>
-                          <option value="USD" selected="">USD</option>
+                          <option value="VNĐ" selected="">VNĐ</option>
                           <option value="AED">AED</option>
                           <option value="AFN">AFN</option>
                           <option value="ALL">ALL</option>
@@ -633,22 +587,18 @@
                 <div class="form-group">
                   <label for="vendorLabel" class="input-label">Động cơ</label>
 
-                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="" th:field="*{dongco}">
                 </div>
                 <div class="form-group">
                   <label for="vendorLabel" class="input-label">Hộp số</label>
 
-                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="" th:field="*{hopso}">
                 </div>
-                <div class="form-group">
-                  <label for="vendorLabel" class="input-label">Phanh</label>
-
-                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="">
-                </div>
+                
                 <div class="form-group">
                   <label for="vendorLabel" class="input-label">Nhiên liệu</label>
 
-                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="" th:field="*{nhienlieu}">
                 </div>
                 <!-- End Form Group -->
 
@@ -656,7 +606,7 @@
                 <div class="form-group">
                   <label for="vendorLabel" class="input-label">Số KM</label>
 
-                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="">
+                  <input type="text" class="form-control" name="vendor" id="vendorLabel" placeholder="" aria-label="" th:field="*{sokm}">
                 </div>
                 <!-- Form Group -->
               
@@ -664,9 +614,7 @@
                 
                 <!-- Form Group -->
 
-                <label for="tagsLabel" class="input-label">Màu sắc</label>
-
-                <input type="text" class="js-tagify tagify-form-control form-control" name="tagsName" id="tagsLabel" placeholder="Enter tags here" aria-label="Enter tags here">
+                
               </div>
               <!-- End Body -->
             </div>
@@ -681,11 +629,14 @@
             <div class="card-body">
               <div class="row justify-content-center justify-content-sm-between">
                 <div class="col">
-                  <button type="button" class="btn btn-ghost-danger">Delete</button>
+                  <button type="button" class="btn btn-ghost-danger" >Delete</button>
                 </div>
+                
                 <div class="col-auto">
+                <a type="button" class="btn btn-ghost-light mr-2" th:href="@{/admin/add}">Tạo mới</a>
+                <a type="button" class="btn btn-ghost-light mr-2" th:href="@{/admin/product-car}">List</a>
                   <button type="button" class="btn btn-ghost-light mr-2">Discard</button>
-                  <button type="button" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn-primary" > Save</button>
                 </div>
               </div>
               <!-- End Row -->

@@ -69,28 +69,15 @@
               </nav>
               
               <div class="d-sm-flex align-items-sm-center">
-                <h1 class="page-header-title" th:text="${'Order #'+bill.getMahd()}"/>
-                <span th:if="${bill.trangthai=='SUCCESS'}" class="badge badge-soft-success ml-sm-3">
-                  <span  class="legend-indicator bg-success"></span>
-                  <th:block th:text="${bill.getTrangthai()}"/>
-                </span>
-                <span th:if="${bill.trangthai=='PACKING'}" class="badge badge-soft-primary ml-sm-3">
-                  <span  class="legend-indicator bg-primary"></span>
-                  <th:block th:text="${bill.getTrangthai()}"/>
-                </span>
-                <span th:if="${bill.trangthai=='PENDING'}" class="badge badge-soft-warning ml-sm-3">
-                  <span  class="legend-indicator bg-warning"></span>
-                  <th:block th:text="${bill.getTrangthai()}"/>
-                </span>
-                <span th:if="${bill.trangthai=='CANCEL'}" class="badge badge-soft-danger ml-sm-3">
-                  <span  class="legend-indicator bg-danger"></span>
-                  <th:block th:text="${bill.getTrangthai()}"/>
+                <h1 class="page-header-title">Order #32543</h1>
+                <span class="badge badge-soft-success ml-sm-3">
+                  <span class="legend-indicator bg-success"></span>Paid
                 </span>
                 <span class="badge badge-soft-info ml-2 ml-sm-3">
                   <span class="legend-indicator bg-info"></span>Fulfilled
                 </span>
                 <span class="ml-2 ml-sm-3">
-                  <i class="tio-date-range"></i><th:block th:text="${bill.ngaymua}" />
+                  <i class="tio-date-range"></i> Aug 17, 2020, 5:48 (ET)
                 </span>
               </div>
 
@@ -131,12 +118,12 @@
             </div>
 
             <div class="col-sm-auto">
-              <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle mr-1" th:href="@{/Admin}" data-toggle="tooltip" data-placement="top" title="Previous order">
+              <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle mr-1" href="#" data-toggle="tooltip" data-placement="top" title="Previous order">
                 <i class="tio-arrow-backward"></i>
               </a>
-              <!--<a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle" href="#" data-toggle="tooltip" data-placement="top" title="Next order">
+              <a class="btn btn-icon btn-sm btn-ghost-secondary rounded-circle" href="#" data-toggle="tooltip" data-placement="top" title="Next order">
                 <i class="tio-arrow-forward"></i>
-              </a>-->
+              </a>
             </div>
           </div>
         </div>
@@ -148,55 +135,179 @@
             <div class="card mb-3 mb-lg-5">
               <!-- Header -->
               <div class="card-header">
-                <h4 class="card-header-title">Chi tiết đơn hàng <span class="badge badge-soft-dark rounded-circle ml-1" th:text="${bill.billaccessoriesdetailsByMahd.size()}" /></h4>
-                <!--<a class="link" href="javascript:;">Chỉnh sửa</a>-->
+                <h4 class="card-header-title">Chi tiết đơn hàng <span class="badge badge-soft-dark rounded-circle ml-1">4</span></h4>
+                <a class="link" href="javascript:;">Chỉnh sửa</a>
               </div>
               <!-- End Header -->
           
               <!-- Body -->
               <div class="card-body">
                 <!-- Media -->
-                <div th:each="billdeteil:${bill.getBillaccessoriesdetailsByMahd()}">
-                  <div class="media" >
-                    <div class="avatar avatar-xl mr-3">
-                      <img class="img-fluid" th:src="@{\assets\img\400x400\img26.jpg}" alt="Image Description">
-                    </div>
-                    <div class="media-body">
-                      <div class="row">
-                        <div class="col-md-4 mb-3 mb-md-0" >
-                          <label class="h5 d-block" th:text="${billdeteil.getAccessoriesByMalk().ten}" />
-                          <div class="font-size-sm text-body">
-                            <span>Mã sản phẩm:</span>
-                            <span class="font-weight-bold" th:text="${billdeteil.getAccessoriesByMalk().malk}" />
-                          </div>
-                          <div class="font-size-sm text-body">
-                            <span>Xuất xứ:</span>
-                            <span class="font-weight-bold" th:text="${billdeteil.getAccessoriesByMalk().getXuatxu()}" />
-                          </div>
-                          <div class="font-size-sm text-body">
-                            <span>Kho:</span>
-                            <span class="font-weight-bold" th:text="${billdeteil.getAccessoriesByMalk().getSoluong()}" />
-                          </div>
-                        </div>
+                <div class="media">
+                  <div class="avatar avatar-xl mr-3">
+                    <img class="img-fluid" th:src="@{\assets\img\400x400\img26.jpg}" alt="Image Description">
+                  </div>
 
-                        <div class="col col-md-3 align-self-center">
-                          <h5 th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(billdeteil.getGia()),'$',''),'.00','')+' VNĐ'}" />
-                        </div>
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-md-6 mb-3 mb-md-0">
+                        <a class="h5 d-block" href="ecommerce-product-details.html">Đèn pha S0222</a>
 
-                        <div class="col col-md-1 align-self-center">
-                          <h5 th:text="${billdeteil.getSoluong()}" />
+                        <div class="font-size-sm text-body">
+                          <span>Mã sản phẩm:</span>
+                          <span class="font-weight-bold">502</span>
                         </div>
+                        <div class="font-size-sm text-body">
+                          <span>Xuất xứ:</span>
+                          <span class="font-weight-bold">Việt Nam</span>
+                        </div>
+                        <div class="font-size-sm text-body">
+                          <span>Kho:</span>
+                          <span class="font-weight-bold">20</span>
+                        </div>
+                      </div>
 
-                        <div class="col col-md-3 align-self-center text-right">
-                          <h5 th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(billdeteil.getGia()*billdeteil.getSoluong()),'$',''),'.00','')+' VNĐ'}" />
-                        </div>
+                      <div class="col col-md-2 align-self-center">
+                        <h5>$21.00</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center">
+                        <h5>2</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center text-right">
+                        <h5>$42.00</h5>
                       </div>
                     </div>
                   </div>
-                  <hr>
                 </div>
                 <!-- End Media -->
 
+                <hr>
+                <!-- Media -->
+                <div class="media">
+                  <div class="avatar avatar-xl mr-3">
+                    <img class="img-fluid" th:src="@{\assets\img\400x400\img17.jpg}" alt="Image Description">
+                  </div>
+
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-md-6 mb-3 mb-md-0">
+                        <a class="h5 d-block" href="ecommerce-product-details.html">Đèn pha S0222</a>
+
+                        <div class="font-size-sm text-body">
+                          <span>Mã sản phẩm:</span>
+                          <span class="font-weight-bold">502</span>
+                        </div>
+                        <div class="font-size-sm text-body">
+                          <span>Xuất xứ:</span>
+                          <span class="font-weight-bold">Việt Nam</span>
+                        </div>
+                        <div class="font-size-sm text-body">
+                          <span>Kho:</span>
+                          <span class="font-weight-bold">20</span>
+                        </div>
+                        
+                      </div>
+
+                      <div class="col col-md-2 align-self-center">
+                        <h5>$21.00</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center">
+                        <h5>2</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center text-right">
+                        <h5>$42.00</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Media -->
+
+                <hr>
+                <!-- Media -->
+                <div class="media">
+                  <div class="avatar avatar-xl mr-3">
+                    <img class="img-fluid" th:src="@{\assets\img\400x400\img19.jpg}" alt="Image Description">
+                  </div>
+
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-md-6 mb-3 mb-md-0">
+                        <a class="h5 d-block" href="ecommerce-product-details.html">Đèn pha S0222</a>
+
+                        <div class="font-size-sm text-body">
+                          <span>Mã sản phẩm:</span>
+                          <span class="font-weight-bold">502</span>
+                        </div>
+                        <div class="font-size-sm text-body">
+                          <span>Xuất xứ:</span>
+                          <span class="font-weight-bold">Việt Nam</span>
+                        </div>
+                        <div class="font-size-sm text-body">
+                          <span>Kho:</span>
+                          <span class="font-weight-bold">20</span>
+                        </div>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center">
+                        <h5>$21.00</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center">
+                        <h5>2</h5>
+                      </div>
+
+                      <div class="col col-md-2 align-self-center text-right">
+                        <h5>$42.00</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Media -->
+
+                <hr>
+
+               <!-- Media -->
+               <div class="media">
+                <div class="avatar avatar-xl mr-3">
+                  <img class="img-fluid" th:src="@{\assets\img\400x400\img21.jpg}" alt="Image Description">
+                </div>
+
+                <div class="media-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                      <a class="h5 d-block" href="ecommerce-product-details.html">Đèn pha S0222</a>
+
+                      <div class="font-size-sm text-body">
+                        <span>Xuất xứ:</span>
+                        <span class="font-weight-bold">Việt Nam</span>
+                      </div>
+                      <div class="font-size-sm text-body">
+                        <span>Kho:</span>
+                        <span class="font-weight-bold">20</span>
+                      </div>
+                    </div>
+
+                    <div class="col col-md-2 align-self-center">
+                      <h5>$21.00</h5>
+                    </div>
+
+                    <div class="col col-md-2 align-self-center">
+                      <h5>2</h5>
+                    </div>
+
+                    <div class="col col-md-2 align-self-center text-right">
+                      <h5>$42.00</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Media -->
+
+              <hr>
 
                
 
@@ -204,13 +315,13 @@
                   <div class="col-md-8 col-lg-7">
                     <dl class="row text-sm-right">
                       <dt class="col-sm-6">Tổng phụ:</dt>
-                      <dd class="col-sm-6">0 vnđ</dd>
+                      <dd class="col-sm-6">$65.00</dd>
                       <dt class="col-sm-6">Phí vận chuyển:</dt>
-                      <dd class="col-sm-6">27,000 vnđ</dd>
+                      <dd class="col-sm-6">$0.00</dd>
                       <dt class="col-sm-6">Tổng:</dt>
-                      <dd class="col-sm-6"><th:block th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(bill.tongtien+27000),'$',''),'.00','')+' vnđ'}"/></dd>
+                      <dd class="col-sm-6">$65.00</dd>
                       <dt class="col-sm-6">Số tiền đã trả:</dt>
-                      <dd class="col-sm-6">0 vnđ</dd>
+                      <dd class="col-sm-6">$65.00</dd>
                     </dl>
                     <!-- End Row -->
                   </div>
@@ -372,12 +483,12 @@
           
               <!-- Body -->
               <div class="card-body">
-                <a class="media align-items-center" href="#">
+                <a class="media align-items-center" href="ecommerce-customer-details.html">
                   <div class="avatar avatar-circle mr-3">
                     <img class="avatar-img" th:src="@{\assets\img\160x160\img10.jpg}" alt="Image Description">
                   </div>
                   <div class="media-body">
-                    <span class="text-body text-hover-primary"><strong th:text="${bill.accountByMatv.getMatv()}" /></span>
+                    <span class="text-body text-hover-primary">Amanda Harvey</span>
                   </div>
                   <div class="media-body text-right">
                     <i class="tio-chevron-right text-body"></i>
@@ -386,7 +497,7 @@
                 
                 <hr>
 
-                <a class="media align-items-center" href="#">
+                <a class="media align-items-center" href="ecommerce-customer-details.html">
                   <div class="icon icon-soft-info icon-circle mr-3">
                     <i class="tio-shopping-basket-outlined"></i>
                   </div>
@@ -402,16 +513,17 @@
                 
                 <div class="d-flex justify-content-between align-items-center">
                   <h5>Thông tin liên lạc</h5>
-                  <!--<a class="link" href="javascript:;">Chỉnh sửa</a>-->
+                  <a class="link" href="javascript:;">Chỉnh sửa</a>
                 </div>
+
                 <ul class="list-unstyled list-unstyled-py-2">
                   <li>
                     <i class="tio-online mr-2"></i>
-                    <th:block th:text="${bill.accountByMatv.getEmail()}"/>
+                    ella@example.com
                   </li>
                   <li>
                     <i class="tio-android-phone-vs mr-2"></i>
-                    <th:block th:text="${bill.accountByMatv.getSdt()}" />
+                    +1 (609) 972-22-22
                   </li>
                 </ul>
 
@@ -419,7 +531,7 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                   <h5>Địa chỉ giao hàng</h5>
-                  <!--<a class="link" href="javascript:;">Chỉnh sửa</a>-->
+                  <a class="link" href="javascript:;">Chỉnh sửa</a>
                 </div>
 
                 <span class="d-block">

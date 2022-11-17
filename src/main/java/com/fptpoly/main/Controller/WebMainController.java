@@ -404,4 +404,23 @@ public class WebMainController {
         return "site/security/quenmatkhau";
     }
 
+ //ordercar
+ @GetMapping("admin/orders-car")
+ public String listCar(Model model) {
+     List<Billcar> list = billcarRepository.findAll();
+     model.addAttribute("billcar",list);
+     return "admin/pages/E-commerce/orders/orders-car";
+     
+ }
+ //orderaccess
+ @GetMapping("admin/orders-accessories")
+ public String bill(Model model){
+     Billaccessories bill = new Billaccessories();
+     model.addAttribute("bill", bill);
+     List<Billaccessories> bills = billaccessoriesRepository.findAll();
+     model.addAttribute("bills", bills);
+      return "admin/pages/E-commerce/orders/orders-accessories";
+ }
+
+
 }
