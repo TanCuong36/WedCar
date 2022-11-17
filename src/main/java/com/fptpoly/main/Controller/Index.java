@@ -6,6 +6,7 @@ import com.fptpoly.main.Entity.Appointment;
 import com.fptpoly.main.Entity.Cartaccessories;
 import com.fptpoly.main.Util._CookieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -133,6 +134,11 @@ public class Index {
             System.out.println("Lỗi:"+ex);
         }
         /*return "Đặt lịch thành công";*/
+    }
+
+    @GetMapping("TotalPage")
+    public  List totalpage() {
+        return carRepository.findAll();
     }
 
     // danh sách tất cả linh kiên có trong cửa hàng

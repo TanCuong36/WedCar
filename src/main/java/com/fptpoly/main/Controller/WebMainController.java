@@ -1,32 +1,24 @@
 package com.fptpoly.main.Controller;
 
 import com.fptpoly.main.Dao.*;
-import com.fptpoly.main.Entity.Billaccessories;
-import com.fptpoly.main.Entity.Billaccessoriesdetail;
-import com.fptpoly.main.Entity.Cartaccessories;
-import com.fptpoly.main.Entity.fillCar;
+import com.fptpoly.main.Entity.*;
+import com.fptpoly.main.Util._CookieService;
 import groovy.util.logging.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpResponse;
 import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -75,15 +67,45 @@ public class WebMainController {
 
     // danh sách tất cả các xe
     @GetMapping("home/listcar")
-    public String listcar(Model model) {
-        System.out.println("số lượng xe: " + carRepository.findAll().size());
-        model.addAttribute("AllCar", carRepository.findAll());
+    public String listcar(Model model,@RequestParam("page")int indexPage,@RequestParam("search")Optional<String> search) {
+        /*_CookieService cookieService = new _CookieService();
+        cookieService.add("page",indexPage+"",1);*/
+        String check = search.orElse(null);
+        Page<Car> page = null;
+        if(check==null || check.isEmpty()){
+             page = carRepository.findAll(PageRequest.of(indexPage-1, 10));
+        }else {
+            Pageable pageable = PageRequest.of(0,Integer.MAX_VALUE);
+            page = carRepository.searchAllByTencarLike("%"+search.get()+"%",pageable);
+        }
+        if (indexPage==0){
+            indexPage=1;
+        }if (indexPage>=page.getTotalPages()){
+            indexPage = page.getTotalPages();
+        }
+        model.addAttribute("AllCar",page);
+        model.addAttribute("IndexPage",indexPage);
         model.addAttribute("Brands", brandRepository.findAll());
         model.addAttribute("Types", typecarRepository.findAll());
         model.addAttribute("fill", new fillCar());
         return "site/products/luoicar";
 
     }
+
+    @GetMapping("home/listcar/sreach")
+    public String search(Model model,@RequestParam("search")String search){
+        int totalpage = 0;
+        if(carRepository.findAll().size()%10>0){
+            totalpage = carRepository.findAll().size()/10+1;
+        }else{
+            totalpage =carRepository.findAll().size()/10;
+        }
+        model.addAttribute("totalPage",totalpage);
+        model.addAttribute("Brands", brandRepository.findAll());
+        model.addAttribute("Types", typecarRepository.findAll());
+        return "site/products/luoicar";
+    }
+
 
     // chức năng đăng xuất
     @GetMapping("logout")
@@ -93,7 +115,7 @@ public class WebMainController {
     }
 
     // chức năng lọc xem theo loại xe và hãng xe
-    @GetMapping("home/listcar/{filler}")
+    /*@GetMapping("home/listcar/{filler}")
     public String listcar(Model model, @PathVariable("filler") String fil) {
         try {
             if (fil.startsWith("LX")) {
@@ -110,7 +132,16 @@ public class WebMainController {
             return "site/products/listcar";
         }
 
-    }
+    }*/
+    /*@GetMapping("home/listcar/{filler}")
+    public String listcar(Model model) {
+        *//*model.addAttribute("namsx",x);*//*
+        model.addAttribute("Brands", brandRepository.findAll());
+        model.addAttribute("Types", typecarRepository.findAll());
+        model.addAttribute("fill", new fillCar());
+        return "site/products/luoicar";
+
+    }*/
 
     // chức năng thêm sản phẩm vào giỏ hàng trực tiếp bằng thymeleaf
     @GetMapping("home/addcart")
@@ -152,7 +183,13 @@ public class WebMainController {
     }
 
     @GetMapping(value = "home/car-detail")
-    public String cardetail(Model model, @RequestParam("idcar") String id) {
+    public String cardetail(Model model, @RequestParam("idcar") String id,Principal principal) {
+        try {
+            model.addAttribute("Account",accountRepository.findAllByMatv(principal.getName()));
+        }catch (Exception ex){
+            model.addAttribute("Account",new Account());
+            logger.info("Không Sao Vẫn Ổn 😘👌");
+        }
         Date x = new Date();
         idcar = id;
         System.out.println(appointmentRepository.findNgayhenAndCarByIdcar(x, id).size());
@@ -271,20 +308,16 @@ public class WebMainController {
                 billaccessoriesdetailRepository.delete(ls.get(i));
             }*/
             Billaccessories billaccessories = billaccessoriesRepository.findAllByMahd(id);
-            switch (status){
-                case "PENDING":{
-                    billaccessories.setTrangthai("CANCEL");
-                    billaccessories.setNgaynhan(new Date());
-                    logger.info("Huỷ Đơn Thành Công");
-                    break;
-                }
-                case "CANCEL":{
-                    billaccessories.setTrangthai("PENDING");
-                    billaccessories.setNgaymua(new Date());
-                    billaccessories.setNgaynhan(null);
-                    logger.info("Mua Lại Thành Công");
-                    break;
-                }
+
+            if (status.equals("PENDING") || status.equals("PACKING")){
+                billaccessories.setTrangthai("CANCEL");
+                billaccessories.setNgaynhan(new Date());
+                logger.info("Huỷ Đơn Thành Công");
+            }else if(status.equals("CANCEL")){
+                billaccessories.setTrangthai("PENDING");
+                billaccessories.setNgaymua(new Date());
+                billaccessories.setNgaynhan(null);
+                logger.info("Mua Lại Thành Công");
             }
             billaccessoriesRepository.save(billaccessories);
         } catch (Exception e) {
@@ -294,28 +327,18 @@ public class WebMainController {
     }
 
 
-    @GetMapping("home/donhang")
-    public String donhang(Model model) {
-        return "site/user/donhang";
-    }
-
-    @GetMapping("home/user-info")
-    public String user_info(Model model) {
-        return "site/user/user-info";
-    }
-
-
     @GetMapping("home/hoadon")
     public String hoadon(Model model, @RequestParam("idhd") String idhd) {
         model.addAttribute("billdetail", billaccessoriesdetailRepository.findAllByBillaccessoriesByMahd_Mahd(idhd));
         return "site/user/hoadon-detail";
     }
 
-    @GetMapping("home/wishlist")
-    public String wishlist(Model model) {
-        return "site/wishlist";
+    @GetMapping("home/LichHen")
+    public String appointment(Model model,Principal principal) {
+        System.out.println(appointmentRepository.fillappointment(principal.getName()).get(0).getLoai());
+        model.addAttribute("appontments",appointmentRepository.fillappointment(principal.getName()));
+        return "site/user/lichhen";
     }
-
     @GetMapping("home/dashboard")
     public String dashboard(Model model, Principal principal, @RequestParam("status") Optional<String> status) {
         String trangthai = status.orElse("PENDING");
@@ -343,6 +366,21 @@ public class WebMainController {
         }
         model.addAttribute("checked",status.orElse("PENDING"));
         return "site/user/donhang";
+    }
+
+    @GetMapping("home/donhang")
+    public String donhang(Model model) {
+        return "site/user/donhang";
+    }
+
+    @GetMapping("home/user-info")
+    public String user_info(Model model) {
+        return "site/user/user-info";
+    }
+
+    @GetMapping("home/wishlist")
+    public String wishlist(Model model) {
+        return "site/wishlist";
     }
 
     @GetMapping("home/contact")

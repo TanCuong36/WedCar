@@ -152,15 +152,20 @@
                                 </div>
                                 <!--mini-cart-->
                                 <div class="collapse navbar-collapse">
-                                    <form class="navbar-form" role="search">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                    <form th:action="@{'/home/listcar?page='+1}" method="get" class="navbar-form" role="search">
+                                        <!--<div class="input-group">
+                                            <input type="text" name="search" placeholder="Search">
+                                            <button type="submit" class="search-btn"> <span
+                                                    class="glyphicon glyphicon-search"> <span
+                                                    class="sr-only">Tìm kiếm</span> </span> </button>
                                             <span class="input-group-btn">
                                                     <button type="submit" class="search-btn"> <span
                                                             class="glyphicon glyphicon-search"> <span
                                                             class="sr-only">Tìm kiếm</span> </span> </button>
                                                 </span>
-                                        </div>
+                                        </div>-->
+                                        <input type="text" />
+                                        <!--<button>vxcvxcvxcvxc</button>-->
                                     </form>
                                 </div>
                                 <!--links-->
@@ -384,7 +389,7 @@
                                                 <ul class="level1">
                                                     <!-- <li class="level1 first"><a href="grid.html"><span>Lưới
                                                                 ôtô</span></a></li> -->
-                                                    <li class="level1 nav-10-2"><a th:href="@{/home/listcar}">
+                                                    <li class="level1 nav-10-2"><a th:href="@{/home/listcar?page=1}">
                                                                 <span>Danh
                                                                     sách xe</span> </a></li>
                                                     <!-- <li class="level1 nav-10-3"> <a href="grid1.html"> <span>Lưới

@@ -6,7 +6,6 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body>
 <section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
 
@@ -15,9 +14,7 @@
         app.controller('myctrl', function ($scope, $http) {
             /*reload();*/
             function _success(res) {
-
             }
-
             function _error(res) {
                 var data = res.data;
                 var status = res.status;
@@ -159,8 +156,10 @@
                                                 <td><strong><span class="nobr"
                                                                   th:text="${#dates.format(donhang.getNgaymua(),'yyyy-MM-dd HH:mm:ss')}"/></strong>
                                                 </td>
-                                                <td th:if="${checked=='PENDING'}"><strong th:text="${donhang.accountByMatv.matv}"/></td>
-                                                <td th:if="${checked!='PENDING'}"><strong th:text="${donhang.ngaynhan}"/></td>
+                                                <td th:if="${checked=='PENDING'}"><strong
+                                                        th:text="${donhang.accountByMatv.matv}"/></td>
+                                                <td th:if="${checked!='PENDING'}"><strong
+                                                        th:text="${#dates.format(donhang.getNgaynhan(),'yyyy-MM-dd HH:mm:ss')}"/></td>
                                                 <td>
                                                     <!--<span class="price"
                                                   th:text="${#strings.replace(#strings.replace(#numbers.formatCurrency(donhang.tongtien),'$',''),'.00','')}"/>--><span
@@ -180,7 +179,8 @@
                                                 </td>
                                                 <td>
                                                     <!--=====================================================================-->
-                                                    <span th:if="${checked=='PENDING'}"  class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
+                                                    <span th:if="${checked=='PENDING'}"
+                                                          class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5"
                                                             stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
@@ -191,17 +191,20 @@
                                                     </span>
                                                     <!--=====================================================================-->
                                                     <!--=====================================================================-->
-                                                    <span th:if="${checked=='PACKING'}" class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
+                                                    <span th:if="${checked=='PACKING'}"
+                                                          class="inline-flex items-center justify-center rounded-full bg-amber-200 px-2.5 py-0.5 text-amber-700">
                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5"
                                                             stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
                                                        <path stroke-linecap="round" stroke-linejoin="round"
                                                              d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
                                                        </svg>
-                                                       <p class="whitespace-nowrap text-lg">Đang Chờ Đóng Gói</p>
+                                                       <p class="whitespace-nowrap text-lg">Đang Đóng Gói</p>
                                                     </span>
-                                                    <!--=====================================================================--><!--=====================================================================-->
-                                                    <span th:if="${checked=='SHIPING'}" class="inline-flex items-center justify-center rounded-full bg-blue-200 px-2.5 py-0.5 text-blue-700">
+                                                    <!--=====================================================================-->
+                                                    <!--=====================================================================-->
+                                                    <span th:if="${checked=='SHIPING'}"
+                                                          class="inline-flex items-center justify-center rounded-full bg-blue-200 px-2.5 py-0.5 text-blue-700">
                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5"
                                                             stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
@@ -210,8 +213,10 @@
                                                        </svg>
                                                        <p class="whitespace-nowrap text-lg">Đang Vận Chuyển</p>
                                                     </span>
-                                                    <!--=====================================================================--><!--=====================================================================-->
-                                                    <span th:if="${checked=='SUCCESS'}" class="inline-flex items-center justify-center rounded-full bg-green-200 px-2.5 py-0.5 text-green-700">
+                                                    <!--=====================================================================-->
+                                                    <!--=====================================================================-->
+                                                    <span th:if="${checked=='SUCCESS'}"
+                                                          class="inline-flex items-center justify-center rounded-full bg-green-200 px-2.5 py-0.5 text-green-700">
                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5"
                                                             stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
@@ -220,8 +225,10 @@
                                                        </svg>
                                                        <p class="whitespace-nowrap text-lg">Giao Thành Công</p>
                                                     </span>
-                                                    <!--=====================================================================--><!--=====================================================================-->
-                                                    <span th:if="${checked=='CANCEL'}" class="inline-flex items-center justify-center rounded-full bg-red-200 px-2.5 py-0.5 text-red-700">
+                                                    <!--=====================================================================-->
+                                                    <!--=====================================================================-->
+                                                    <span th:if="${checked=='CANCEL'}"
+                                                          class="inline-flex items-center justify-center rounded-full bg-red-200 px-2.5 py-0.5 text-red-700">
                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5"
                                                             stroke="currentColor" class="-ml-1 mr-1.5 h-4 w-4">
@@ -233,9 +240,9 @@
                                                     <!--=====================================================================-->
                                                 </td>
                                                 <td class="a-center last"><span class="nobr"> <a
-                                                                    th:href="@{'/home/hoadon?idhd='+${donhang.getMahd()}}">Xem
+                                                        th:href="@{'/home/hoadon?idhd='+${donhang.getMahd()}}">Xem
                                                                     đơn đặt hàng</a><span class="separator"> | </span>
-                                                                <label th:if="${checked=='PENDING'}"
+                                                                <label th:if="${checked=='PENDING'||checked=='PACKING'}"
                                                                        th:for="${donhang.getMahd()}"
                                                                        style="max-width: 50px;background: #3e6274"
                                                                        class="btn">Huỷ Đơn</label>

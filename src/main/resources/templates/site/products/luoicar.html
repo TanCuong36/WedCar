@@ -7,8 +7,26 @@
 </head>
 <body>
 <section layout:fragment="content" style="margin-top: 108px;" ng-controller="myctrl">
-    <div id="page">
 
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myctrl', function ($scope, $http) {
+            $http.get('/TotalPage').then(function (response) {
+                $scope.totalpage = response.data;
+            })
+            $http.get('/Brands').then(function (response) {
+                $scope.Brands = response.data;
+            })
+            $scope.fillHang = function(hang){
+                $http.get('/Cars?hang='+hang).then(function (response) {
+                    $scope.Cars = response.data;
+                })
+            }
+        });
+    </script>
+
+
+    <div id="page">
         <div class="page-heading">
             <div class="breadcrumbs">
                 <div class="container">
@@ -46,7 +64,7 @@
                             <article class="col-main">
                                 <div class="toolbar">
                                     <div class="sorter">
-                                        <div class="view-mode"><a th:href="@{/home/listcar}" title="List"
+                                        <div class="view-mode"><a th:href="@{/home/listcar?page=1}" title="List"
                                                                   class="button-grid">&nbsp;</a> <span title="list"
                                                                                                        class="button button-active button-list">&nbsp;</span>
                                         </div>
@@ -63,11 +81,22 @@
                                             </li>
                                         </ul>
                                         <a class="button-asc left" href="#" title="Set Descending Direction"><span
-                                                class="top_arrow"></span></a></div>
+                                                class="top_arrow"></span></a>
+                                    </div>
                                     <div class="pager">
                                         <div id="limiter">
-                                            <label>Lượt xem: </label>
-                                            <ul>
+                                            <div>
+                                                <form th:action="@{/home/listcar?page=1}" method="get">
+                                                    <input type="text" hidden name="page" value="1">
+                                                    <input type="text" placeholder="Search..." name="search">
+                                                    <button>Search</button>
+                                                </form>
+
+                                            </div>
+
+
+                                            <label>Tổng Số Trang: <th:block th:text="${AllCar.getTotalPages()}" /></label>
+                                            <!--<ul>
                                                 <li><a href="#">15<span class="right-arrow"></span></a>
                                                     <ul>
                                                         <li><a href="#">20</a></li>
@@ -75,18 +104,16 @@
                                                         <li><a href="#">35</a></li>
                                                     </ul>
                                                 </li>
-                                            </ul>
+                                            </ul>-->
                                         </div>
                                         <div class="pages">
                                             <label>Trang:</label>
                                             <ul class="pagination">
-                                                <li><a href="#">&laquo;</a></li>
-                                                <li class="active"><a href="#">1</a></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li><a href="#">&raquo;</a></li>
+                                                <li><a th:href="@{'/home/listcar?page='+${IndexPage-1<1?1:IndexPage-1}}">&laquo;</a></li>
+                                                <li class="active"><a href="#"><th:block th:text="${IndexPage}"/></a></li>
+                                                <li><a style="border: none;font-size: 15px;width: 10px" href="#">|</a></li>
+                                                <li class="active"><a href="#"><th:block th:text="${AllCar.getTotalPages()}"/></a></li>
+                                                <li><a th:href="@{'/home/listcar?page='+${IndexPage+1>AllCar.getTotalPages()?AllCar.getTotalPages():IndexPage+1}}">&raquo;</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -347,60 +374,52 @@
                         <div class="section-filter">
                             <div class="b-filter__inner bg-grey">
                                 <h2>TÌM CHIẾC XE PHÙ HỢP VỚI BẠN</h2>
-                                <form class="b-filter">
+                                <form th:action="@{/home/listcar?page=1}" class="b-filter" method="get">
                                     <div class="btn-group bootstrap-select" style="width: 100%;">
-                                        <select class="selectpicker" data-width="100%" tabindex="-98">
-                                            <option>Chọn thực hiện</option>
-                                            <option>Make 1</option>
-                                            <option>Make 2</option>
-                                            <option>Make 3</option>
+                                        <select name="typecar" class="selectpicker" data-width="100%" tabindex="-98">
+                                            <option value="">Chọn Hãng Xe</option>
+                                            <option th:each="brand :${Brands}" th:value="${brand.getMa()}"><th:block th:text="${brand.getTenhang()}"/></option>
+                                            <!--<option>Make 2</option>
+                                            <option>Make 3</option>-->
+                                        </select>
+                                    </div>
+                                    <div class="btn-group bootstrap-select" style="width: 100%;">
+                                        <input name="Year" placeholder="Năm Sản Xuất" style="width:250px;margin-bottom:5px" class="selectpicker" data-width="100%" tabindex="-98" />
+                                    </div>
+                                    <div class="btn-group bootstrap-select" style="width: 100%;">
+                                        <select name="model" class="selectpicker" data-width="100%" tabindex="-98">
+                                            <option value="">Chọn kiểu xe</option>
+                                            <option th:each="model :${Types}" th:value="${model.getMaloai()}"><th:block th:text="${model.getTenloai()}" /></option>
                                         </select>
                                     </div>
                                     <div class="btn-group bootstrap-select" style="width: 100%;">
                                         <select class="selectpicker" data-width="100%" tabindex="-98">
-                                            <option>Chọn tình trạng ô tô</option>
-                                            <option>Status 1</option>
-                                            <option>Status 2</option>
-                                            <option>Status 3</option>
+                                            <option value="">Chọn hộp số</option>
+                                            <option>Số Tự Động</option>
+                                            <option>Số Sàn</option>
                                         </select>
                                     </div>
-                                    <div class="btn-group bootstrap-select" style="width: 100%;">
-                                        <select class="selectpicker" data-width="100%" tabindex="-98">
-                                            <option>Chọn kiểu xe</option>
-                                            <option>Model 1</option>
-                                            <option>Model 2</option>
-                                            <option>Model 3</option>
-                                        </select>
-                                    </div>
-                                    <div class="btn-group bootstrap-select" style="width: 100%;">
-                                        <select class="selectpicker" data-width="100%" tabindex="-98">
-                                            <option>Chọn tất cả vị trí</option>
-                                            <option>Location 1</option>
-                                            <option>Location 2</option>
-                                            <option>Location 3</option>
-                                        </select>
-                                    </div>
-                                    <div class="btn-group bootstrap-select" style="width: 100%;">
+                                    <!--<div class="btn-group bootstrap-select" style="width: 100%;">
                                         <select class="selectpicker" data-width="100%" tabindex="-98">
                                             <option>Chọn năm</option>
                                             <option>2017</option>
                                             <option>2016</option>
                                             <option>2015</option>
                                         </select>
-                                    </div>
-                                    <div class="ui-filter-slider">
+                                    </div>-->
+<!--                                    <div class="ui-filter-slider">
                                         <div class="sidebar-widget-body m-t-10">
                                             <div class="price-range-holder"><span class="min-max"> <span
                                                     class="pull-left">$200.00</span> <span
                                                     class="pull-right">$800.00</span> </span>
                                                 <input type="text" class="price-slider" value="" style="display:block">
                                             </div>
-                                            <!-- /.price-range-holder -->
+                                            &lt;!&ndash; /.price-range-holder &ndash;&gt;
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div>
                                         <div class="b-filter__btns">
-                                            <button class="btn btn-lg btn-primary">Tìm xe</button>
+                                            <button style="position: relative;" class="btn btn-lg btn-primary">Tìm xe</button>
                                         </div>
                                     </div>
                                 </form>
